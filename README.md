@@ -4,7 +4,7 @@ Interfaz gráfica hecha con React para conectar con la lógica existente en el r
 
 ## Paso 1
 
-Crear una aplicación react con create-react-app (no es necesario TypeScript por el momento)
+Crear una aplicación react con create-react-app --template typescript
 
 ## Paso 2
 
@@ -34,7 +34,3 @@ Gestionar estado y ahorrar en peticiones: TanStackQuery/ReactQuery
 ## Paso 6
 
 Testing con Jest y ReactTestingLibrary. Probar el funcionamiento de la pantalla principal y de cada una de las tabs
-
-## Paso 7 (opcional)
-
-Migración a TypeScript
