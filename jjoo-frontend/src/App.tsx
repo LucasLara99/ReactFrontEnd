@@ -1,65 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import ConsultaTab from './components/ConsultaTab';
 import CrudTab from './components/CrudTab';
+import Consulta from './components/Consulta';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+function App() {
+  const [value, setValue] = React.useState(0);
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 2 }}>
-          <div>{children}</div>
-        </Box>
-      )}
+    <div>
+      <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
+        <Tab label="Consulta" />
+        <Tab label="CRUD de SedeJJOO" />
+      </Tabs>
+      {value === 0 ? <Consulta /> : <CrudTab />}
     </div>
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Consulta" {...a11yProps(0)} />
-          <Tab label="CRUD jjoo" {...a11yProps(1)} />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <ConsultaTab />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <CrudTab />
-      </CustomTabPanel>
-    </Box>
-  );
-}
+export default App;
