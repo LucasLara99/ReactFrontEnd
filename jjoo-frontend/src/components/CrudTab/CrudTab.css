@@ -1,7 +1,19 @@
-.tabla-sedes {
-    margin: 1em; 
+.crud-tab-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
 }
 
-.crear-sede {
-    margin: 1em;
+.crud-tab-accordion{
+    width: 80%;
+    margin-bottom: 1em;
+    background-color: #aaa;
+}
+
+.crud-tab-accordion .MuiAccordionDetails-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

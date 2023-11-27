@@ -1,12 +1,4 @@
-.main-tab {
-    width: 50%;
-    margin: auto;
-    display: flex;  
-}
-
-.single-tab {
-    width: 50%;
-    margin: auto;
+.tabs-container {
     display: flex;
-    flex-direction: column;
-}
+    justify-content: center;
+  }

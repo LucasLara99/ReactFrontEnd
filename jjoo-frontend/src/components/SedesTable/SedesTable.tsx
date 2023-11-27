@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import './SedesTable.css';
+import SedeRow from '../FilaSede/FilaSede';
 
 interface Sede {
   año: number;
@@ -27,18 +28,12 @@ const SedesTable = () => {
             <TableRow>
               <TableCell>Año</TableCell>
               <TableCell>Descripción</TableCell>
-              <TableCell>ID Ciudad</TableCell>
               <TableCell>Nombre Ciudad</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sedes.map((sede: Sede) => (
-              <TableRow key={sede.año}>
-                <TableCell>{sede.año}</TableCell>
-                <TableCell>{sede.description}</TableCell>
-                <TableCell>{sede.idCiudad}</TableCell>
-                <TableCell>{sede.nombreCiudad}</TableCell>
-              </TableRow>
+              <SedeRow key={sede.año} sede={sede} />
             ))}
           </TableBody>
         </Table>

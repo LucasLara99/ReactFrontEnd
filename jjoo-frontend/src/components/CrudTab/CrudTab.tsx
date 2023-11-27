@@ -4,6 +4,7 @@ import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ActualizarSede from '../ActualizarSede/ActualizarSede';
 
 interface Ciudad {
   idCiudad: number;
@@ -57,8 +58,8 @@ const CrudTab = () => {
   };
 
   return (
-    <div>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+    <div className='crud-tab-container'>
+      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
@@ -68,12 +69,10 @@ const CrudTab = () => {
             Tabla de sedes
           </Typography>
         </AccordionSummary>
-        <div className='tabla-sedes'>
-          <SedesTable />
-        </div>
+        <SedesTable />
       </Accordion>
 
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2bh-content"
@@ -93,6 +92,31 @@ const CrudTab = () => {
             handleSubmit={handleSubmit}
           />
         </div>
+      </Accordion>
+
+      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            Actualizar una sede
+          </Typography>
+        </AccordionSummary>
+        <ActualizarSede />
+      </Accordion>
+
+      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            Borrar una sede
+          </Typography>
+        </AccordionSummary>
       </Accordion>
     </div>
   );

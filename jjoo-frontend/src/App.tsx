@@ -10,10 +10,12 @@ function App() {
 
   return (
     <div>
-      <Tabs className='main-tab' value={value} onChange={(_, newValue) => setValue(newValue)}>
-        <Tab className='single-tab' label="Consulta" />
-        <Tab className='single-tab' label="CRUD de SedeJJOO" />
-      </Tabs>
+      <div className="tabs-container">
+        <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
+          <Tab label="Consulta" />
+          <Tab label="CRUD de SedeJJOO" />
+        </Tabs>
+      </div>
       {value === 0 ? <Consulta /> : <CrudTab />}
     </div>
   );
