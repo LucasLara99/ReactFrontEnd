@@ -6,6 +6,10 @@
     margin-top: 2em;
 }
 
+.table-container {
+    width: 80%;
+}
+
 .crud-tab-accordion{
     width: 80%;
     margin-bottom: 1em;

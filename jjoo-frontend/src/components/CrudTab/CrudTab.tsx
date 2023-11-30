@@ -4,7 +4,6 @@ import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ActualizarSede from '../ActualizarSede/ActualizarSede';
 
 interface Ciudad {
   idCiudad: number;
@@ -59,19 +58,9 @@ const CrudTab = () => {
 
   return (
     <div className='crud-tab-container'>
-      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Tabla de sedes
-          </Typography>
-        </AccordionSummary>
+      <div className='table-container'>
         <SedesTable />
-      </Accordion>
-
+      </div>
       <Accordion className="crud-tab-accordion" expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -92,19 +81,6 @@ const CrudTab = () => {
             handleSubmit={handleSubmit}
           />
         </div>
-      </Accordion>
-
-      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Actualizar una sede
-          </Typography>
-        </AccordionSummary>
-        <ActualizarSede />
       </Accordion>
 
       <Accordion className="crud-tab-accordion" expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>

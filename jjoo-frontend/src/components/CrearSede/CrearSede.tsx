@@ -1,11 +1,7 @@
 import React from 'react';
 import { Select, MenuItem, TextField, Button, Grid } from '@mui/material';
+import { Ciudad } from '../../models/Ciudad';
 import './CrearSede.css';
-
-interface Ciudad {
-  idCiudad: number;
-  nombreCiudad: string;
-}
 
 interface CrearSedeProps {
   ciudades: Ciudad[];
@@ -30,7 +26,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
         <Grid container spacing={3}>
           <Grid item xs={3}>
             <Select
-              value={ciudadSeleccionada}
+              value={ciudadSeleccionada || ""}
               onChange={event => setCiudadSeleccionada(Number(event.target.value))}
               fullWidth
             >
@@ -42,11 +38,11 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
             </Select>
           </Grid>
           <Grid item xs={3}>
-            <TextField value={año} onChange={event => setAño(Number(event.target.value))} label="Año" fullWidth />
+            <TextField value={año || ""} onChange={event => setAño(Number(event.target.value))} label="Año" fullWidth />
           </Grid>
           <Grid item xs={3}>
             <Select
-              value={id_tipo_jjoo}
+              value={id_tipo_jjoo || ""}
               onChange={event => setIdTipoJJOO(Number(event.target.value))}
               fullWidth
             >
