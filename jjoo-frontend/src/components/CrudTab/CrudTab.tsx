@@ -82,18 +82,6 @@ const CrudTab = () => {
           />
         </div>
       </Accordion>
-
-      <Accordion className="crud-tab-accordion" expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Borrar una sede
-          </Typography>
-        </AccordionSummary>
-      </Accordion>
     </div>
   );
 };

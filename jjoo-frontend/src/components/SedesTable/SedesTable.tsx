@@ -3,7 +3,8 @@ import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import './SedesTable.css';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit'; 
+import DeleteIcon from '@mui/icons-material/Delete';                                 
 import SedeRow from '../FilaSede/FilaSede';
 
 const tipoJJOOMap: { [key: string]: number } = {
@@ -87,7 +88,8 @@ const SedesTable = () => {
               <TableCell>Año</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Nombre Ciudad</TableCell>
-              <TableCell><EditIcon></EditIcon></TableCell>
+              <TableCell><EditIcon/></TableCell>
+              <TableCell><DeleteIcon/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
