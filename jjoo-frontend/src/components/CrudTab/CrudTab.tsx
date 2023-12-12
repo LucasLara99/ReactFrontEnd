@@ -52,7 +52,13 @@ const CrudTab = () => {
       body: JSON.stringify(sede),
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+        setExpanded(false);
+        setCiudadSeleccionada(null);
+        setAño(null);
+        setIdTipoJJOO(null);
+      })
       .catch(error => console.error('Error:', error));
   };
 
