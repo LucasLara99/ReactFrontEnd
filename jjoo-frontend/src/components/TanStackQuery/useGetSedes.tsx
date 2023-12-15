@@ -1,8 +1,8 @@
-import { useQuery, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-export const useSedes = () => {
+export const useGetSedes = () => {
     const { data, isPending, error } = useQuery({
-        queryKey: ['getData'],
+        queryKey: ['getSedes'],
         queryFn: () =>
             fetch('http://localhost:8080/sedejjoo').then(
                 (res) => res.json(),

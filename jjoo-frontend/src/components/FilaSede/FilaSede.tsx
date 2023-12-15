@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import { TableRow, TableCell, Button, Select, MenuItem } from '@mui/material';
+import { useGetCiudades } from '../TanStackQuery/useGetCiudades';
+import { useUpdateSede } from '../TanStackQuery/useUpdateSede';
 
-
-interface SedeRowProps {
-  sede: Sede;
-  onUpdate: (updatedSede: Sede) => void;
-  ciudades: Ciudad[];
-  ciudadSeleccionada: number | null;
-  setCiudadSeleccionada: (value: number | null) => void;
-}
 
 const tipoJJOOMap: { [key: string]: number } = {
   'INVIERNO': 1,
   'VERANO': 2,
 };
 
-const SedeRow: React.FC<SedeRowProps> = ({ sede, onUpdate, ciudades }) => {
+export const FilaSede = ({ sede }: { sede: Sede }) => {
   const [editing, setEditing] = useState(false);
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
 
+  const { data: ciudades, isPending, error } = useGetCiudades();
+
+  const updateSede = useUpdateSede()
+
+  if (isPending) return <div>Loading...</div>
+  if (error) return <div>An error has occurred: {error.message}</div>
+
   const handleUpdate = () => {
-    onUpdate({ ...sede, idCiudad });
+    updateSede.mutate({...sede, idCiudad});
     setEditing(false);
   };
 
@@ -79,7 +80,7 @@ const SedeRow: React.FC<SedeRowProps> = ({ sede, onUpdate, ciudades }) => {
             ))}
           </Select>
         ) : (
-          ciudades.find(ciudad => ciudad.idCiudad === idCiudad)?.nombreCiudad
+          ciudades.find((ciudad: Ciudad) => ciudad.idCiudad === idCiudad)?.nombreCiudad
         )}
       </TableCell>
       <TableCell>
@@ -96,4 +97,4 @@ const SedeRow: React.FC<SedeRowProps> = ({ sede, onUpdate, ciudades }) => {
   );
 };
 
-export default SedeRow;
+export default FilaSede;

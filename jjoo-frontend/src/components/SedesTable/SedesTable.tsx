@@ -1,83 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import './SedesTable.css';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit'; 
-import DeleteIcon from '@mui/icons-material/Delete';                                 
-import SedeRow from '../FilaSede/FilaSede';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilaSede from '../FilaSede/FilaSede';
+import { useGetSedes } from '../TanStackQuery/useGetSedes';
+import { useGetCiudades } from '../TanStackQuery/useGetCiudades';
 
-const tipoJJOOMap: { [key: string]: number } = {
-  'INVIERNO': 1,
-  'VERANO': 2,
-};
 
 const SedesTable = () => {
-  const [sedes, setSedes] = useState<Sede[]>([]);
-  const [ciudades, setCiudades] = useState<Ciudad[]>([]);
-  const [ciudadSeleccionada, setCiudadSeleccionada] = useState<number | null>(null);
+  const { data: sedesData, isPending: sedesPending, error: sedesError } = useGetSedes();
+  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();
 
-  useEffect(() => {
-    fetch('http://localhost:8080/sedejjoo')
-      .then(response => response.json())
-      .then(data => setSedes(data))
-      .catch(error => console.error('Error:', error));
-
-    fetch('http://localhost:8080/ciudades')
-      .then(response => response.json())
-      .then(data => setCiudades(data))
-      .catch(error => console.error('Error:', error));
-  }, []);
-
-  const handleUpdate = (updatedSede: Sede) => {
-    let idTipoJJOOKey: string;
-
-    switch (updatedSede.description) {
-      case 'INVIERNO':
-        idTipoJJOOKey = 'INVIERNO';
-        break;
-      case 'VERANO':
-        idTipoJJOOKey = 'VERANO';
-        break;
-      default:
-        console.error(`Invalid description: ${updatedSede.description}`);
-        return;
+  const ciudadMap = React.useMemo(() => {
+    if (!ciudades) {
+      return {};
     }
 
-    if (!(idTipoJJOOKey in tipoJJOOMap)) {
-      console.error(`Invalid idTipoJJOO: ${updatedSede.idTipoJJOO}`);
-      return;
+    return ciudades.reduce((map: { [key: number]: string }, ciudad: Ciudad) => {
+      map[ciudad.idCiudad] = ciudad.nombreCiudad;
+      return map;
+    }, {});
+  }, [ciudades]);
+
+  const sedesConNombreCiudad = React.useMemo(() => {
+    if (!sedesData) {
+      return [];
     }
 
-    const idTipoJJOO = tipoJJOOMap[idTipoJJOOKey];
-    fetch(`http://localhost:8080/sedejjoo/${updatedSede.año}/${idTipoJJOO}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        idCiudad: updatedSede.idCiudad,
-      }),
-    })
-      .then(response => {
-        if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
-          return response.json();
-        } else {
-          return null;
-        }
-      })
-      .then(data => {
-        const updatedSedes = sedes.map(s => {
-          if (s.año === updatedSede.año && s.idTipoJJOO && s.idTipoJJOO.toLowerCase() === idTipoJJOOKey) {
-            return data;
-          } else {
-            return s;
-          }
-        });
-        setSedes(updatedSedes);
-      })
-      .catch(error => console.error('Error:', error));
-  };
+    return sedesData.map((sede: Sede, index: number) => ({
+      ...sede,
+      nombreCiudad: ciudadMap[sede.idCiudad],
+      key: `${sede.año}-${sede.description}-${index}`,
+    }));
+  }, [sedesData, ciudadMap]);
+
+  if (sedesPending || ciudadesPending) return <div>Loading...</div>
+  if (sedesError || ciudadesError) return <div>An error has occurred: {sedesError?.message} {ciudadesError?.message}</div>
 
   return (
     <div className='tabla-sedes'>
@@ -88,20 +49,13 @@ const SedesTable = () => {
               <TableCell>Año</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Nombre Ciudad</TableCell>
-              <TableCell><EditIcon/></TableCell>
-              <TableCell><DeleteIcon/></TableCell>
+              <TableCell><EditIcon /></TableCell>
+              <TableCell><DeleteIcon /></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {sedes.map((sede: Sede) => (
-              <SedeRow
-                key={`${sede.año} ${sede.description}`}
-                sede={sede}
-                onUpdate={handleUpdate}
-                ciudades={ciudades}
-                ciudadSeleccionada={ciudadSeleccionada}
-                setCiudadSeleccionada={setCiudadSeleccionada}
-              />
+            {sedesConNombreCiudad.map((sede: Sede, index: number) => (
+              <FilaSede key={index} sede={sede} />
             ))}
           </TableBody>
         </Table>
