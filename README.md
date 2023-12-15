@@ -20,16 +20,11 @@ Implementar una interfaz basada en dos pantallas o "tabs" que corresponderán a 
 
 ## Paso 4
 
-Conectar con backend. Tenemos dos opciones:
-
-- Axios
-- Fetch API
+Conectar con backend. Fetch API
 
 ## Paso 5
 
-Gestionar estado y ahorrar en peticiones: TanStackQuery/ReactQuery
-
-- Redux?
+Gestionar estado y ahorrar en peticiones: TanStackQuery
 
 ## Paso 6
 
