@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import { TableRow, TableCell, Button, Select, MenuItem } from '@mui/material';
-import { useGetCiudades } from '../TanStackQuery/useGetCiudades';
-import { useUpdateSede } from '../TanStackQuery/useUpdateSede';
+import { useGetCiudades } from '../../hooks/useGetCiudades';
+import { useUpdateSede } from '../../hooks/useUpdateSede';
 
 
 const tipoJJOOMap: { [key: string]: number } = {

@@ -6,8 +6,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilaSede from '../FilaSede/FilaSede';
-import { useGetSedes } from '../TanStackQuery/useGetSedes';
-import { useGetCiudades } from '../TanStackQuery/useGetCiudades';
+import { useGetSedes } from '../../hooks/useGetSedes';
+import { useGetCiudades } from '../../hooks/useGetCiudades';
 
 
 const SedesTable = () => {

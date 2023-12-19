@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Sede } from '../../models/Sede';
+import { Sede } from '../models/Sede';
 
 const tipoJJOOMap: { [key: string]: number } = {
   'INVIERNO': 1,
