@@ -54,7 +54,7 @@ const SedesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sedesConNombreCiudad.map((sede: Sede, index: number) => (
+            {sedesConNombreCiudad.sort((a:Sede, b:Sede) => a.año - b.año).map((sede: Sede, index: number) => (
               <FilaSede key={index} sede={sede} />
             ))}
           </TableBody>
