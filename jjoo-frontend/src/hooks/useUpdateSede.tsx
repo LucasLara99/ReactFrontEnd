@@ -9,8 +9,8 @@ const tipoJJOOMap: { [key: string]: number } = {
 export const useUpdateSede = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (updatedSede: Sede) => {
+  const mutation = useMutation({
+    mutationFn: async (updatedSede: Sede) => {
       let idTipoJJOOKey: string;
 
       switch (updatedSede.description) {
@@ -30,7 +30,7 @@ export const useUpdateSede = () => {
 
       const idTipoJJOO = tipoJJOOMap[idTipoJJOOKey as 'INVIERNO' | 'VERANO'];
 
-      return fetch(`http://localhost:8080/sedejjoo/${updatedSede.año}/${idTipoJJOO}`, {
+      const response = await fetch(`http://localhost:8080/sedejjoo/${updatedSede.año}/${idTipoJJOO}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -39,9 +39,36 @@ export const useUpdateSede = () => {
           idCiudad: updatedSede.idCiudad,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Error: ' + response.statusText);
+      }
+
+      return response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sedes'] });
+    onMutate: async (updatedSede: Sede) => {
+      await queryClient.cancelQueries({queryKey: ['getSedes']})
+
+      const previousSedes = queryClient.getQueryData<Sede[]>(['getSedes']);
+
+      queryClient.setQueryData(['getSedes'], (old: Sede[] | undefined) =>
+        old?.map(sede => sede.año === updatedSede.año && sede.idTipoJJOO === updatedSede.idTipoJJOO ? updatedSede : sede)
+      );
+
+      return { previousSedes };
+    },
+    onError: (err, updatedSede, context) => {
+      if (context?.previousSedes) {
+        queryClient.setQueryData(['getSedes'], context.previousSedes);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({queryKey: ['getSedes']});
     },
   });
+
+  return {
+    ...mutation,
+    isLoadingMutation: mutation.isPending,
+  };
 };

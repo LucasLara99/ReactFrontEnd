@@ -16,14 +16,14 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
 
   const { data: ciudades, isPending, error } = useGetCiudades();
-
-  const updateSede = useUpdateSede()
+  const { mutate, isLoadingMutation} = useUpdateSede()
 
   if (isPending) return <div>Loading...</div>
   if (error) return <div>An error has occurred: {error.message}</div>
 
   const handleUpdate = () => {
-    updateSede.mutate({...sede, idCiudad});
+    if (isLoadingMutation) return;
+    mutate({ ...sede, idCiudad });
     setEditing(false);
   };
 
@@ -85,7 +85,7 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
       </TableCell>
       <TableCell>
         {editing ? (
-          <Button onClick={handleUpdate}>Actualizar</Button>
+          <Button disabled={isLoadingMutation} onClick={handleUpdate}>Actualizar</Button>
         ) : (
           <Button onClick={() => setEditing(true)}>Editar</Button>
         )}
