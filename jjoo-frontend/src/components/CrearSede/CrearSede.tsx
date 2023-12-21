@@ -1,7 +1,6 @@
 import React from 'react';
-import { Select, MenuItem, TextField, Button, Grid, Snackbar, IconButton } from '@mui/material';
+import { Select, MenuItem, TextField, Button, Grid } from '@mui/material';
 import { Ciudad } from '../../models/Ciudad';
-import CloseIcon from '@mui/icons-material/Close';
 import './CrearSede.css';
 
 interface CrearSedeProps {
@@ -20,39 +19,7 @@ const tiposJJOO = [
   { nombre: 'VERANO', id: 2 },
 ];
 
-
-
 const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, setCiudadSeleccionada, año, setAño, id_tipo_jjoo, setIdTipoJJOO, handleSubmit }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
   return (
     <div className='main-container'>
       <form onSubmit={handleSubmit}>
@@ -87,17 +54,10 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
             </Select>
           </Grid>
           <Grid item xs={3}>
-            <Button type="submit" onClick={handleClick} fullWidth>Crear Sede</Button>
+            <Button type="submit" fullWidth>Crear Sede</Button>
           </Grid>
         </Grid>
       </form>
-      <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          message="Sede creada"
-          action={action}
-        />
     </div>
   );
 };

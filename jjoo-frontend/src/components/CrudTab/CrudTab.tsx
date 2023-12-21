@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SedesTable from '../SedesTable/SedesTable';
 import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-interface Ciudad {
-  idCiudad: number;
-  nombreCiudad: string;
-}
+import { useGetCiudades } from '../../hooks/useGetCiudades';
+import { usePostSede } from '../../hooks/usePostSede';
+import { SedePost } from '../../models/SedePost';
 
 const CrudTab = () => {
-  const [ciudades, setCiudades] = useState<Ciudad[]>([]);
+  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();
+  const { mutate: postSede, isLoadingMutation: isPostingSede } = usePostSede();
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState<number | null>(null);
   const [año, setAño] = useState<number | null>(null);
   const [id_tipo_jjoo, setIdTipoJJOO] = useState<number | null>(null);
@@ -23,14 +22,8 @@ const CrudTab = () => {
 
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  useEffect(() => {
-    fetch('http://localhost:8080/ciudades')
-      .then(response => response.json())
-      .then(data => setCiudades(data))
-      .catch(error => console.error('Error al obtener datos:', error));
-  }, []);
-
   const handleSubmit = (event: React.FormEvent) => {
+    if (isPostingSede) return;
     event.preventDefault();
 
     if (año == null || ciudadSeleccionada == null || id_tipo_jjoo == null) {
@@ -38,29 +31,24 @@ const CrudTab = () => {
       return;
     }
 
-    const sede = {
+    const sede: SedePost = {
       año,
       idCiudad: ciudadSeleccionada,
       id_tipo_jjoo
     };
 
-    fetch('http://localhost:8080/sedejjoo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(sede),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
+    postSede(sede, {
+      onSuccess: () => {
         setExpanded(false);
         setCiudadSeleccionada(null);
         setAño(null);
         setIdTipoJJOO(null);
-      })
-      .catch(error => console.error('Error:', error));
+      }
+    });
   };
+
+  if (ciudadesPending) return <div>Loading...</div>
+  if (ciudadesError) return <div>An error has occurred: {ciudadesError?.message}</div>
 
   return (
     <div className='crud-tab-container'>
@@ -77,7 +65,7 @@ const CrudTab = () => {
         </AccordionSummary>
         <div className='crear-sede'>
           <CrearSede
-            ciudades={ciudades}
+            ciudades={ciudades || []}
             ciudadSeleccionada={ciudadSeleccionada}
             setCiudadSeleccionada={setCiudadSeleccionada}
             año={año}
