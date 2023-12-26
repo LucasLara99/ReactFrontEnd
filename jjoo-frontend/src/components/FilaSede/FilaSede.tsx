@@ -4,12 +4,8 @@ import { Ciudad } from '../../models/Ciudad';
 import { TableRow, TableCell, Button, Select, MenuItem } from '@mui/material';
 import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { useUpdateSede } from '../../hooks/useUpdateSede';
+import { useDeleteSede } from '../../hooks/useDeleteSede';
 
-
-const tipoJJOOMap: { [key: string]: number } = {
-  'INVIERNO': 1,
-  'VERANO': 2,
-};
 
 export const FilaSede = ({ sede }: { sede: Sede }) => {
   const [editing, setEditing] = useState(false);
@@ -17,6 +13,7 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
 
   const { data: ciudades, isPending: ciudadesPending, error: errorCiudades } = useGetCiudades();
   const { mutate, isLoadingMutation: isSedeUpdating} = useUpdateSede()
+  const { mutate: deleteSede, isLoagingMutation: isSedeDeleting} = useDeleteSede()
 
   if (ciudadesPending) return <div>Loading...</div>
   if (errorCiudades) return <div>An error has occurred: {errorCiudades.message}</div>
@@ -28,39 +25,8 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
   };
 
   const handleDelete = () => {
-    const deletedSede = sede;
-    let idTipoJJOOKey: string;
-
-    switch (deletedSede.description) {
-      case 'INVIERNO':
-        idTipoJJOOKey = 'INVIERNO';
-        break;
-      case 'VERANO':
-        idTipoJJOOKey = 'VERANO';
-        break;
-      default:
-        console.error(`Invalid description: ${deletedSede.description}`);
-        return;
-    }
-
-    if (!(idTipoJJOOKey in tipoJJOOMap)) {
-      console.error(`Invalid idTipoJJOO: ${deletedSede.idTipoJJOO}`);
-      return;
-    }
-
-    const idTipoJJOO = tipoJJOOMap[idTipoJJOOKey];
-
-    fetch(`http://localhost:8080/sedejjoo/${sede.año}/${idTipoJJOO}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.status;
-        } else {
-          console.error('Error:', response.statusText);
-        }
-      })
-      .catch(error => console.error('Error:', error));
+    if (isSedeDeleting) return;
+    deleteSede(sede);
   };
 
   return (
@@ -91,7 +57,7 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
         )}
       </TableCell>
       <TableCell>
-        <Button disabled={!editing} onClick={handleDelete}>Borrar</Button>
+        <Button onClick={handleDelete}>Borrar</Button>
       </TableCell>
     </TableRow>
   );
