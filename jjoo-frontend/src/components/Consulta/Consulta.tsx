@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useGetConsulta } from '../../hooks/useGetConsulta';
 import './Consulta.css';
 
 interface Item {
@@ -13,18 +14,21 @@ interface Item {
 }
 
 const Consulta = () => {
-  const [datos, setDatos] = useState<Item[]>([]);
+  const { data, isPending, error } = useGetConsulta();
 
-  useEffect(() => {
-    fetch('http://localhost:8080/consulta')
-      .then(response => response.json())
-      .then(data => {
-        setDatos(data);
-      })
-      .catch(error => {
-        console.error('Error al obtener datos:', error);
-      });
-  }, []);
+  const dataWithKey = React.useMemo(() => {
+    if (!data) {
+      return [];
+    }
+
+    return data.map((item: Item, index: number) => ({
+      ...item,
+      key: `${item.id_pais}-${item.id_ciudad}-${index}`,
+    }));
+  }, [data]);
+
+  if (isPending) return <div>Loading...</div>
+  if (error) return <div>An error has occurred: {error?.message}</div>
 
   return (
     <div className='consulta'>
@@ -42,7 +46,7 @@ const Consulta = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {datos.map((item: Item, index: number) => (
+            {dataWithKey.map((item: Item, index: number) => (
               <TableRow key={index}>
                 <TableCell>{item.id_pais}</TableCell>
                 <TableCell>{item.nombre_pais}</TableCell>
