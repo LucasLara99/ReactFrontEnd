@@ -29,6 +29,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
               value={ciudadSeleccionada || ""}
               onChange={event => setCiudadSeleccionada(Number(event.target.value))}
               fullWidth
+              aria-label='Ciudad'
             >
               {ciudades.map((ciudad: Ciudad) => (
                 <MenuItem key={ciudad.idCiudad} value={ciudad.idCiudad}>
@@ -45,6 +46,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
               value={id_tipo_jjoo || ""}
               onChange={event => setIdTipoJJOO(Number(event.target.value))}
               fullWidth
+              aria-label='Tipo JJOO'
             >
               {tiposJJOO.map((tipo) => (
                 <MenuItem key={tipo.id} value={tipo.id}>

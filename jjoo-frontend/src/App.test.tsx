@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // Para poder usar toHaveAttribute
 import App from './App';
 
 test('renders Consulta and CRUD de SedeJJOO tabs', () => {
   render(<App />);
-  
+
   // Comprobar que se muestran las dos pestañas
   const consultaTab = screen.getByText(/Consulta/i);
   const crudTab = screen.getByText(/CRUD de SedeJJOO/i);
