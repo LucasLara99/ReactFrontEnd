@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, MenuItem, TextField, Button, Grid } from '@mui/material';
+import { Select, MenuItem, TextField, Button, Grid, InputLabel } from '@mui/material';
 import { Ciudad } from '../../models/Ciudad';
 import './CrearSede.css';
 
@@ -25,6 +25,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={3}>
+            <InputLabel id="ciudad-label" className='inputlabel'>Seleccione la ciudad</InputLabel>
             <Select
               value={ciudadSeleccionada || ""}
               onChange={event => setCiudadSeleccionada(Number(event.target.value))}
@@ -39,9 +40,11 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
             </Select>
           </Grid>
           <Grid item xs={3}>
+            <InputLabel id="año-label" className='inputlabel'>Introduzca un año</InputLabel>
             <TextField value={año || ""} onChange={event => setAño(Number(event.target.value))} label="Año" fullWidth />
           </Grid>
           <Grid item xs={3}>
+            <InputLabel id="tipojjoo-label" className='inputlabel'>Seleccione la temporada</InputLabel>
             <Select
               value={id_tipo_jjoo || ""}
               onChange={event => setIdTipoJJOO(Number(event.target.value))}

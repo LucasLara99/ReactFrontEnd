@@ -2,12 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Sede } from '../models/Sede';
 import { SedePost } from '../models/SedePost';
 
+const API_URL = 'http://localhost:8080/sedejjoo';
+
 export const usePostSede = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (newSede: SedePost) => {
-      const response = await fetch('http://localhost:8080/sedejjoo', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ export const usePostSede = () => {
       return response.json();
     },
     onMutate: async (newSede: SedePost) => {
-      await queryClient.cancelQueries({queryKey: ['getSedes']})
+      await queryClient.cancelQueries({ queryKey: ['getSedes'] })
 
       const previousSedes = queryClient.getQueryData<Sede[]>(['getSedes']);
 
@@ -38,7 +40,7 @@ export const usePostSede = () => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({queryKey: ['getSedes']});
+      queryClient.invalidateQueries({ queryKey: ['getSedes'] });
     },
   });
 

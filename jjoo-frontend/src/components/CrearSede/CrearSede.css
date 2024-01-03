@@ -1,3 +1,7 @@
 .main-container {
     margin: 1em;
 }
+
+.inputlabel {
+    margin-bottom: 0.5em;
+}

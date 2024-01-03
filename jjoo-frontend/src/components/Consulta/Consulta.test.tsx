@@ -5,6 +5,7 @@ import Consulta from './Consulta';
 import { useGetConsulta } from '../../hooks/useGetConsulta';
 
 
+//Se usa para simular el hook useGetConsulta
 jest.mock('../../hooks/useGetConsulta');
 
 test('Renderiza la tabla cuando los datos se han cargado', async () => {
