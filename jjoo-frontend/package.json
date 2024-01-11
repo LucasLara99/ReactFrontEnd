@@ -14,6 +14,7 @@
     "@types/node": "^16.18.61",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "node-fetch": "^2.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@tanstack/eslint-plugin-query": "^5.12.1",
     "@testing-library/react": "^14.1.2",
     "eslint": "8.53.0",
@@ -52,6 +54,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "fetch-mock": "^9.11.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.4",
     "parcel-bundler": "^1.12.5",

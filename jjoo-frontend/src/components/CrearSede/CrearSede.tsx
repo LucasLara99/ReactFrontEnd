@@ -59,7 +59,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
             </Select>
           </Grid>
           <Grid item xs={3}>
-            <Button type="submit" fullWidth>Crear Sede</Button>
+            <Button type="submit" disabled={!ciudadSeleccionada || !año || !id_tipo_jjoo} fullWidth>Crear Sede</Button>
           </Grid>
         </Grid>
       </form>
