@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useGetConsulta } from '../../hooks/useGetConsulta';
 import { ConsultaContext } from './ConsultaContext';
 import './Consulta.css';
+import { ErrorContext } from '../../hooks/ErrorContext';
 
 interface Item {
   id_pais: number;
@@ -16,19 +17,12 @@ interface Item {
 
 const Consulta = () => {
   const { data, isPending, error } = useGetConsulta();
-
-  const dataWithKey = React.useMemo(() => {
-    if (!data) {
-      return [];
-    }
-    return data.map((item: Item, index: number) => ({
-      ...item,
-      key: `${item.id_pais}-${item.id_ciudad}-${index}`,
-    }));
-  }, [data]);
+  const { errors } = useContext(ErrorContext);
 
   if (isPending) return <div>Loading...</div>
-  if (error) return <div>An error has occurred: {error?.message}</div>
+  if (error || errors.consultaError) {
+    return <div>An error has occurred: {String(error || errors.consultaError)}</div>
+  }
 
   return (
     <ConsultaContext.Provider value={data}>
@@ -47,8 +41,8 @@ const Consulta = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {dataWithKey.map((item: Item, index: number) => (
-                <TableRow key={index}>
+              {data && data.map((item: Item, index: number) => (
+                <TableRow key={`${item.id_pais}-${item.id_ciudad}-${index}`}>
                   <TableCell>{item.id_pais}</TableCell>
                   <TableCell>{item.nombre_pais}</TableCell>
                   <TableCell>{item.id_ciudad}</TableCell>
