@@ -15,8 +15,8 @@
 }
 
 .consulta .MuiTableHead-root .MuiTableCell-root {
-  color: white;
-  text-align: center;
+    color: white;
+    text-align: center;
 }
 
 .consulta .MuiTableBody-root .MuiTableCell-root {
@@ -25,4 +25,11 @@
 
 .consulta .MuiTableBody-root .MuiTableRow-root:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
 }

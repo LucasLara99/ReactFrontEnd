@@ -7,6 +7,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { usePostSede } from '../../hooks/usePostSede';
 import { SedePost } from '../../models/SedePost';
+import { newtonsCradle } from 'ldrs';
+import NotificacionError from '../NotificacionError/NotificacionError';
 
 const CrudTab = () => {
   const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();
@@ -14,6 +16,7 @@ const CrudTab = () => {
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState<number | null>(null);
   const [año, setAño] = useState<number | null>(null);
   const [id_tipo_jjoo, setIdTipoJJOO] = useState<number | null>(null);
+  newtonsCradle.register()
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -47,8 +50,17 @@ const CrudTab = () => {
     });
   };
 
-  if (ciudadesPending) return <div>Loading...</div>
-  if (ciudadesError) return <div>An error has occurred: {ciudadesError?.message}</div>
+  if (ciudadesPending) return (
+    <div className='loader'>
+      <l-newtons-cradle
+        size="150"
+        speed="1.4"
+        color="#2196f3"
+      ></l-newtons-cradle>
+    </div>
+  )
+
+  if (ciudadesError) return <NotificacionError />
 
   return (
     <div className='crud-tab-container'>

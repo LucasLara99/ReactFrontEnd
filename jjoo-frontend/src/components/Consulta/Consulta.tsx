@@ -4,6 +4,8 @@ import { useGetConsulta } from '../../hooks/useGetConsulta';
 import { ConsultaContext } from './ConsultaContext';
 import './Consulta.css';
 import { ErrorContext } from '../../hooks/ErrorContext';
+import NotificacionError from '../NotificacionError/NotificacionError';
+import { newtonsCradle } from 'ldrs'
 
 interface Item {
   id_pais: number;
@@ -18,10 +20,20 @@ interface Item {
 const Consulta = () => {
   const { data, isPending, error } = useGetConsulta();
   const { errors } = useContext(ErrorContext);
+  newtonsCradle.register()
 
-  if (isPending) return <div>Loading...</div>
+  if (isPending) return (
+    <div className='loader'>
+      <l-newtons-cradle
+        size="150"
+        speed="1.4"
+        color="#2196f3"
+      ></l-newtons-cradle>
+    </div>
+  )
+  
   if (error || errors.consultaError) {
-    return <div>An error has occurred: {String(error || errors.consultaError)}</div>
+    return <NotificacionError />
   }
 
   return (
