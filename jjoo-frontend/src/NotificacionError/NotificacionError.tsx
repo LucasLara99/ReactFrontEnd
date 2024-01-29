@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ErrorContext } from '../../hooks/ErrorContext';
+import { ErrorContext } from '../hooks/ErrorContext';
 import './NotificacionError.css';
 
 const NotificacionError = () => {
@@ -16,14 +16,16 @@ const NotificacionError = () => {
     return null;
   }
 
+  // Obtener el último error
+  const lastErrorKey = Object.keys(errors).slice(-1)[0];
+  const lastError = errors[lastErrorKey];
+
   return (
     <div className='notificacionError'>
-      {Object.entries(errors).map(([key, error]) => (
-        <div key={key}>
-          <p>{error}</p>
-          <button aria-label="Close error message" onClick={() => removeError(key)}>Close</button>
-        </div>
-      ))}
+      <div key={lastErrorKey}>
+        <p>{lastError}</p>
+        <button aria-label="Close error message" onClick={() => removeError(lastErrorKey)}>Close</button>
+      </div>
     </div>
   );
 };

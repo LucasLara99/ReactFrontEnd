@@ -8,7 +8,7 @@ import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { usePostSede } from '../../hooks/usePostSede';
 import { SedePost } from '../../models/SedePost';
 import { newtonsCradle } from 'ldrs';
-import NotificacionError from '../NotificacionError/NotificacionError';
+import NotificacionError from '../../NotificacionError/NotificacionError';
 
 const CrudTab = () => {
   const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();

@@ -6,7 +6,9 @@ import { ErrorContext } from '../../hooks/ErrorContext';
 
 const queryClient = new QueryClient();
 
-const renderWithProviders = (ui: React.ReactElement, value: any, errorValue: any = { errors: {}, addError: () => {}, removeError: () => {}, setErrors: () => {} }) => {
+const defaultErrorValue = { errors: {}, addError: () => {}, removeError: () => {}, setErrors: () => {} };
+
+const renderWithProviders = (ui: React.ReactElement, value: any, errorValue: any = defaultErrorValue) => {
   return render(
     <QueryClientProvider client={queryClient}>
       <ConsultaContext.Provider value={value}>

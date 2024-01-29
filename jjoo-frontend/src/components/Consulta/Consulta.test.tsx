@@ -17,11 +17,7 @@ describe('Componente Consulta', () => {
 
 		const mockAddError = jest.fn();
 
-		const TestComponent = () => {
-			return <Consulta />
-		};
-
-        renderWithProviders(<TestComponent />, null, { errors: {}, addError: mockAddError, removeError: () => { }, setErrors: () => { } });
+		renderWithProviders(<Consulta />, null, { errors: {}, addError: mockAddError, removeError: () => { }, setErrors: () => { } });
 
 		await waitFor(() => {
 			expect(mockAddError).toHaveBeenCalled()

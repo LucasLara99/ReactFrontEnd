@@ -4,7 +4,7 @@ import { useGetConsulta } from '../../hooks/useGetConsulta';
 import { ConsultaContext } from './ConsultaContext';
 import './Consulta.css';
 import { ErrorContext } from '../../hooks/ErrorContext';
-import NotificacionError from '../NotificacionError/NotificacionError';
+import NotificacionError from '../../NotificacionError/NotificacionError';
 import { newtonsCradle } from 'ldrs'
 
 interface Item {
