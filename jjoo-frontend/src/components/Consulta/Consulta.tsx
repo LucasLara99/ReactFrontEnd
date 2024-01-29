@@ -18,21 +18,25 @@ interface Item {
 }
 
 const Consulta = () => {
-  const { data, isPending, error } = useGetConsulta();
-  const { errors } = useContext(ErrorContext);
+  const { addError } = useContext(ErrorContext);
+  const handleError = (error: Error) => {
+    addError({ consultaError: error.toString() });
+  };
+  const { data, isPending, error } = useGetConsulta(handleError);
+
   newtonsCradle.register()
 
   if (isPending) return (
     <div className='loader'>
       <l-newtons-cradle
-        size="150"
+        size="100"
         speed="1.4"
         color="#2196f3"
       ></l-newtons-cradle>
     </div>
   )
-  
-  if (error || errors.consultaError) {
+
+  if (error) {
     return <NotificacionError />
   }
 

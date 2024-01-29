@@ -6,10 +6,15 @@ const NotificacionError = () => {
   const context = useContext(ErrorContext);
 
   if (!context) {
-    return null; // or some fallback UI
+    return null;
   }
 
   const { errors, removeError } = context;
+
+  // Si no hay errores, no renderizar nada
+  if (Object.keys(errors).length === 0) {
+    return null;
+  }
 
   return (
     <div className='notificacionError'>

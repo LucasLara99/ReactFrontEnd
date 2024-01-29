@@ -53,7 +53,7 @@ const CrudTab = () => {
   if (ciudadesPending) return (
     <div className='loader'>
       <l-newtons-cradle
-        size="150"
+        size="100"
         speed="1.4"
         color="#2196f3"
       ></l-newtons-cradle>
