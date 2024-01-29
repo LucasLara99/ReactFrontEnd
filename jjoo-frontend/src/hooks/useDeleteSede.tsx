@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Sede } from '../models/Sede';
+import { useContext } from 'react';
+import { ErrorContext } from './ErrorContext';
 
 const tipoJJOOMap: { [key: string]: number } = {
     'INVIERNO': 1,
@@ -8,6 +10,7 @@ const tipoJJOOMap: { [key: string]: number } = {
 
 export const useDeleteSede = () => {
     const queryClient = useQueryClient();
+    const { addError } = useContext(ErrorContext);
 
     const mutation = useMutation({
         mutationFn: async (deletedSede: Sede) => {
@@ -21,12 +24,12 @@ export const useDeleteSede = () => {
                     idTipoJJOOKey = 'VERANO';
                     break;
                 default:
-                    console.error(`Invalid description: ${deletedSede.description}`);
+                    addError({ descriptionError: `Invalid description: ${deletedSede.description}` }); // Usar addError
                     return;
             }
 
             if (!(idTipoJJOOKey in tipoJJOOMap)) {
-                console.error(`Invalid idTipoJJOO: ${deletedSede.idTipoJJOO}`);
+                addError({ idTipoJJOOError: `Invalid idTipoJJOO: ${deletedSede.idTipoJJOO}` }); // Usar addError
                 return;
             }
 
@@ -39,10 +42,10 @@ export const useDeleteSede = () => {
                     if (response.ok) {
                         return response.status;
                     } else {
-                        console.error('Error:', response.statusText);
+                        addError({ fetchError: `Error: ${response.statusText}` }); // Usar addError
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => addError({ fetchError: `Error: ${error}` })); // Usar addError
         },
         onMutate: async (deletedSede: Sede) => {
             await queryClient.cancelQueries({ queryKey: ['getSedes'] })
@@ -59,11 +62,11 @@ export const useDeleteSede = () => {
             queryClient.setQueryData(['getSedes'], context?.previousSedes);
         },
         onSettled: () => {
-            queryClient.invalidateQueries({queryKey: ['getSedes']});
+            queryClient.invalidateQueries({ queryKey: ['getSedes'] });
         }
     });
     return {
-        ... mutation,
+        ...mutation,
         isLoagingMutation: mutation.isPending
     }
 }

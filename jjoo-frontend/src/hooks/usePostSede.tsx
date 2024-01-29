@@ -1,11 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Sede } from '../models/Sede';
 import { SedePost } from '../models/SedePost';
+import { useContext } from 'react';
+import { ErrorContext } from './ErrorContext';
 
 const API_URL = 'http://localhost:8080/sedejjoo';
 
 export const usePostSede = () => {
   const queryClient = useQueryClient();
+  const { addError } = useContext(ErrorContext); 
 
   const mutation = useMutation({
     mutationFn: async (newSede: SedePost) => {
@@ -18,7 +21,8 @@ export const usePostSede = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error: ' + response.statusText);
+        addError({ fetchError: `Error: ${response.statusText}` });
+        return;
       }
 
       return response.json();
@@ -42,7 +46,7 @@ export const usePostSede = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['getSedes'] });
     },
-  });
+  })
 
   return {
     ...mutation,

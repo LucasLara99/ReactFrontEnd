@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { ErrorContext } from "./ErrorContext";
 
-export const useGetCiudades = () => {
+export const useGetCiudades = (onError: (error: Error) => void) => {
     const { addError } = useContext(ErrorContext)
 
     const { data, isPending, error } = useQuery({
@@ -11,12 +11,17 @@ export const useGetCiudades = () => {
             fetch('http://localhost:8080/ciudades')
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error del servidor');
+                        return response.text().then(text => {
+                            throw new Error(text);
+                        });
                     }
                     return response.json();
                 })
                 .catch(error => {
                     addError({ consultaError: error.toString() });
+                    if (onError) {
+                        onError(error);
+                    }
                     throw error;
                 })
     })

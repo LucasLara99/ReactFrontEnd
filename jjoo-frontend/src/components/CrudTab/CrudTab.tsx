@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SedesTable from '../SedesTable/SedesTable';
 import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
@@ -9,9 +9,15 @@ import { usePostSede } from '../../hooks/usePostSede';
 import { SedePost } from '../../models/SedePost';
 import { newtonsCradle } from 'ldrs';
 import NotificacionError from '../../NotificacionError/NotificacionError';
+import { ErrorContext } from '../../hooks/ErrorContext';
 
 const CrudTab = () => {
-  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();
+  const { addError } = useContext(ErrorContext);
+  const handleError = (error: Error) => {
+    addError({ crudTabError: error.toString() });
+  };
+
+  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades(handleError);
   const { mutate: postSede, isLoadingMutation: isPostingSede } = usePostSede();
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState<number | null>(null);
   const [año, setAño] = useState<number | null>(null);

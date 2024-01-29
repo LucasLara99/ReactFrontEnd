@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import { TableRow, TableCell, Button, Select, MenuItem } from '@mui/material';
 import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { useUpdateSede } from '../../hooks/useUpdateSede';
 import { useDeleteSede } from '../../hooks/useDeleteSede';
-
+import { ErrorContext } from '../../hooks/ErrorContext';
 
 export const FilaSede = ({ sede }: { sede: Sede }) => {
   const [editing, setEditing] = useState(false);
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
+  const { addError } = useContext(ErrorContext);
+  const handleError = (error: Error) => {
+    addError({ filaError: error.toString() });
+  };
 
-  const { data: ciudades, isPending: ciudadesPending, error: errorCiudades } = useGetCiudades();
-  const { mutate, isLoadingMutation: isSedeUpdating} = useUpdateSede()
-  const { mutate: deleteSede, isLoagingMutation: isSedeDeleting} = useDeleteSede()
+  const { data: ciudades, isPending: ciudadesPending, error: errorCiudades } = useGetCiudades(handleError);
+  const { mutate, isLoadingMutation: isSedeUpdating } = useUpdateSede()
+  const { mutate: deleteSede, isLoagingMutation: isSedeDeleting } = useDeleteSede()
 
   if (ciudadesPending) return <div>Loading...</div>
   if (errorCiudades) return <div>An error has occurred: {errorCiudades.message}</div>

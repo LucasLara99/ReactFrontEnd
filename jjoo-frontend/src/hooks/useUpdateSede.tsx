@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Sede } from '../models/Sede';
+import { useContext } from 'react';
+import { ErrorContext } from './ErrorContext';
 
 const tipoJJOOMap: { [key: string]: number } = {
   'INVIERNO': 1,
@@ -8,6 +10,7 @@ const tipoJJOOMap: { [key: string]: number } = {
 
 export const useUpdateSede = () => {
   const queryClient = useQueryClient();
+  const { addError } = useContext(ErrorContext);
 
   const mutation = useMutation({
     mutationFn: async (updatedSede: Sede) => {
@@ -21,11 +24,13 @@ export const useUpdateSede = () => {
           idTipoJJOOKey = 'VERANO';
           break;
         default:
-          throw new Error(`Invalid description: ${updatedSede.description}`);
+          addError({ descriptionError: `Invalid description: ${updatedSede.description}` }); 
+          return;
       }
 
       if (!(idTipoJJOOKey in tipoJJOOMap)) {
-        throw new Error(`Invalid idTipoJJOO: ${updatedSede.idTipoJJOO}`);
+        addError({ idTipoJJOOError: `Invalid idTipoJJOO: ${updatedSede.idTipoJJOO}` }); 
+        return;
       }
 
       const idTipoJJOO = tipoJJOOMap[idTipoJJOOKey as 'INVIERNO' | 'VERANO'];
@@ -41,13 +46,14 @@ export const useUpdateSede = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error: ' + response.statusText);
+        addError({ fetchError: `Error: ${response.statusText}` }); 
+        return;
       }
 
       return response.json();
     },
     onMutate: async (updatedSede: Sede) => {
-      await queryClient.cancelQueries({queryKey: ['getSedes']})
+      await queryClient.cancelQueries({ queryKey: ['getSedes'] })
 
       const previousSedes = queryClient.getQueryData<Sede[]>(['getSedes']);
 
@@ -63,9 +69,9 @@ export const useUpdateSede = () => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({queryKey: ['getSedes']});
+      queryClient.invalidateQueries({ queryKey: ['getSedes'] });
     },
-  });
+  })
 
   return {
     ...mutation,

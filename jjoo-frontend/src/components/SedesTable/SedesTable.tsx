@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
 import './SedesTable.css';
@@ -8,11 +8,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilaSede from '../FilaSede/FilaSede';
 import { useGetSedes } from '../../hooks/useGetSedes';
 import { useGetCiudades } from '../../hooks/useGetCiudades';
+import { ErrorContext } from '../../hooks/ErrorContext';
 
 
 const SedesTable = () => {
-  const { data: sedesData, isPending: sedesPending, error: sedesError } = useGetSedes();
-  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades();
+  const { addError } = useContext(ErrorContext);
+  const handleError = (error: Error) => {
+    addError({ sedesTableError: error.toString() });
+  };
+  const { data: sedesData, isPending: sedesPending, error: sedesError } = useGetSedes(handleError);
+  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades(handleError);
 
   const ciudadMap = React.useMemo(() => {
     if (!ciudades) {
