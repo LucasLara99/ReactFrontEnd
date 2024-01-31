@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import Consulta from './Consulta';
 import fetchMock from 'fetch-mock';
 import renderWithProviders from './test-utils';
-import { ErrorContext } from '../../hooks/ErrorContext';
 
 describe('Componente Consulta', () => {
 	afterEach(() => {
