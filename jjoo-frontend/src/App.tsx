@@ -6,24 +6,28 @@ import Consulta from './components/Consulta/Consulta';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorProvider } from './hooks/ErrorContext';
-
+import useFavTab from './hooks/useFavTab';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useFavTab('0', 'favoriteTab');
+
+  const handleChange = (_: any, newValue: number) => {
+    setValue(String(newValue));
+  };
 
   return (
     <ErrorProvider>
       <QueryClientProvider client={queryClient}>
         <div>
           <div className="tabs-container">
-            <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
-              <Tab label="Consulta" style={{ color: '#ffffff' }}/>
-              <Tab label="CRUD de SedeJJOO" style={{ color: '#ffffff' }}/>
+            <Tabs value={Number(value)} onChange={handleChange}>
+              <Tab label="Consulta" style={{ color: '#ffffff' }} />
+              <Tab label="CRUD de SedeJJOO" style={{ color: '#ffffff' }} />
             </Tabs>
           </div>
-          {value === 0 ? <Consulta /> : <CrudTab />}
+          {value === '0' ? <Consulta /> : <CrudTab />}
         </div>
       </QueryClientProvider>
     </ErrorProvider>
