@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { ErrorContext } from './ErrorContext';
 import { useCrudTab } from './useCrudTab';
 import { ReactNode } from 'react';
@@ -20,7 +20,6 @@ describe('useCrudTab', () => {
 
         const { result } = renderHook(() => useCrudTab(), { wrapper });
 
-        // Simulate form submission
         const mockEvent = {
             preventDefault: jest.fn(),
             currentTarget: { checkValidity: () => true },
@@ -30,7 +29,6 @@ describe('useCrudTab', () => {
             result.current.handleSubmit(mockEvent);
         });
 
-        // Check if addError was called when form fields are null
         expect(addError).toHaveBeenCalledWith({ crudTabError: 'Todos los campos son requeridos' });
     });
 });

@@ -1,49 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Sede } from '../../models/Sede';
-import { Ciudad } from '../../models/Ciudad';
 import './SedesTable.css';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilaSede from '../FilaSede/FilaSede';
-import { useGetSedes } from '../../hooks/useGetSedes';
-import { useGetCiudades } from '../../hooks/useGetCiudades';
-import { ErrorContext } from '../../hooks/ErrorContext';
-
+import { useSedesTable } from '../../hooks/useSedesTable';
+import NotificacionError from '../../NotificacionError/NotificacionError';
 
 const SedesTable = () => {
-  const { addError } = useContext(ErrorContext);
-  const handleError = (error: Error) => {
-    addError({ sedesTableError: error.toString() });
-  };
-  const { data: sedesData, isPending: sedesPending, error: sedesError } = useGetSedes(handleError);
-  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades(handleError);
-
-  const ciudadMap = React.useMemo(() => {
-    if (!ciudades) {
-      return {};
-    }
-
-    return ciudades.reduce((map: { [key: number]: string }, ciudad: Ciudad) => {
-      map[ciudad.idCiudad] = ciudad.nombreCiudad;
-      return map;
-    }, {});
-  }, [ciudades]);
-
-  const sedesConNombreCiudad = React.useMemo(() => {
-    if (!sedesData) {
-      return [];
-    }
-
-    return sedesData.map((sede: Sede, index: number) => ({
-      ...sede,
-      nombreCiudad: ciudadMap[sede.idCiudad],
-      key: `${sede.año}-${sede.description}-${index}`,
-    }));
-  }, [sedesData, ciudadMap]);
+  const { sedesConNombreCiudad, sedesPending, sedesError, ciudadesPending, ciudadesError } = useSedesTable();
 
   if (sedesPending || ciudadesPending) return <div>Loading...</div>
-  if (sedesError || ciudadesError) return <div>An error has occurred: {sedesError?.message} {ciudadesError?.message}</div>
+  if (sedesError || ciudadesError) return <NotificacionError />
 
   return (
     <div className='tabla-sedes'>
@@ -59,7 +28,7 @@ const SedesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sedesConNombreCiudad.sort((a:Sede, b:Sede) => a.año - b.año).map((sede: Sede) => (
+            {sedesConNombreCiudad.sort((a: Sede, b: Sede) => a.año - b.año).map((sede: Sede) => (
               <FilaSede key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`} sede={sede} />
             ))}
           </TableBody>
