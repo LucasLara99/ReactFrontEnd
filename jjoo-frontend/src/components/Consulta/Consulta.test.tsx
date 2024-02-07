@@ -5,6 +5,10 @@ import Consulta from './Consulta';
 import fetchMock from 'fetch-mock';
 import renderWithProviders from './test-utils';
 
+type ErrorType = {
+	[key: string]: string;
+};
+
 describe('Componente Consulta', () => {
 	afterEach(() => {
 		fetchMock.restore();
@@ -16,7 +20,7 @@ describe('Componente Consulta', () => {
 
 		const mockAddError = jest.fn();
 
-		renderWithProviders(<Consulta />, null, { errors: {}, addError: mockAddError, removeError: () => { }, setErrors: () => { } });
+		renderWithProviders(<Consulta />, null, { errors: {}, addError: mockAddError, removeError: (errorKey: string) => { console.log(`removeError called with key: ${errorKey}`); }, setErrors: (errors: ErrorType) => { console.log(`setErrors called with errors: ${JSON.stringify(errors)}`); } });
 
 		await waitFor(() => {
 			expect(mockAddError).toHaveBeenCalled()

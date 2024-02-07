@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { render, fireEvent, screen, within, prettyDOM } from "@testing-library/react";
+import React from "react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import CrearSede from "./CrearSede";
 import { Ciudad } from '../../models/Ciudad';

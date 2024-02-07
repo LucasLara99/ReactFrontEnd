@@ -13,12 +13,9 @@ type ErrorContextType = {
 
 export const ErrorContext = React.createContext<ErrorContextType>({
     errors: {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setErrors: () => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    addError: () => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    removeError: () => { },
+    setErrors: () => { throw new Error("setErrors function must be overridden"); },
+    addError: () => { throw new Error("addError function must be overridden"); },
+    removeError: () => { throw new Error("removeError function must be overridden"); },
 });
 
 export const ErrorProvider = ({ children }: { children: ReactNode }) => {

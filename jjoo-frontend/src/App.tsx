@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 function App() {
   const [value, setValue] = useFavTab('0', 'favoriteTab');
 
-  const handleChange = (_: any, newValue: number) => {
+  const handleChange = (_: unknown, newValue: number) => {
     setValue(String(newValue));
   };
 

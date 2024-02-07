@@ -1,62 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import SedesTable from '../SedesTable/SedesTable';
 import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useGetCiudades } from '../../hooks/useGetCiudades';
-import { usePostSede } from '../../hooks/usePostSede';
-import { SedePost } from '../../models/SedePost';
 import { newtonsCradle } from 'ldrs';
 import NotificacionError from '../../NotificacionError/NotificacionError';
-import { ErrorContext } from '../../hooks/ErrorContext';
+import { useCrudTab } from '../../hooks/useCrudTab';
 
 const CrudTab = () => {
-  const { addError } = useContext(ErrorContext);
-  const handleError = (error: Error) => {
-    addError({ crudTabError: error.toString() });
-  };
+  const {
+    ciudades,
+    ciudadesPending,
+    ciudadesError,
+    ciudadSeleccionada,
+    setCiudadSeleccionada,
+    año,
+    setAño,
+    id_tipo_jjoo,
+    setIdTipoJJOO,
+    expanded,
+    handleChange,
+    handleSubmit,
+    isPostingSede
+  } = useCrudTab();
 
-  const { data: ciudades, isPending: ciudadesPending, error: ciudadesError } = useGetCiudades(handleError);
-  const { mutate: postSede, isLoadingMutation: isPostingSede } = usePostSede();
-  const [ciudadSeleccionada, setCiudadSeleccionada] = useState<number | null>(null);
-  const [año, setAño] = useState<number | null>(null);
-  const [id_tipo_jjoo, setIdTipoJJOO] = useState<number | null>(null);
   newtonsCradle.register()
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-
-  const [expanded, setExpanded] = React.useState<string | false>(false);
-
-  const handleSubmit = (event: React.FormEvent) => {
-    if (isPostingSede) return;
-    event.preventDefault();
-
-    if (año == null || ciudadSeleccionada == null || id_tipo_jjoo == null) {
-      console.error('Todos los campos son requeridos');
-      return;
-    }
-
-    const sede: SedePost = {
-      año,
-      idCiudad: ciudadSeleccionada,
-      id_tipo_jjoo
-    };
-
-    postSede(sede, {
-      onSuccess: () => {
-        setExpanded(false);
-        setCiudadSeleccionada(null);
-        setAño(null);
-        setIdTipoJJOO(null);
-      }
-    });
-  };
-
-  if (ciudadesPending) return (
+  if (ciudadesPending || isPostingSede) return (
     <div className='loader'>
       <l-newtons-cradle
         size="100"
