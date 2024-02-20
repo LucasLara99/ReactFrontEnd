@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useGetConsulta } from '../../hooks/useGetConsulta';
 import { ConsultaContext } from './ConsultaContext';
@@ -17,7 +17,7 @@ interface Item {
   numero_veces_sede: number;
 }
 
-const Consulta = () => {
+const Consulta = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
   const { addError } = useContext(ErrorContext);
   const handleError = (error: Error) => {
     addError({ consultaError: error.toString() });
@@ -25,6 +25,10 @@ const Consulta = () => {
   const { data, isPending, error } = useGetConsulta(handleError);
 
   newtonsCradle.register()
+
+  useEffect(() => {
+    setCurrentComponent('Consulta');
+  }, []);
 
   if (isPending) return (
     <div className='loader'>

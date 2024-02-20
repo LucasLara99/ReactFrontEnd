@@ -15,12 +15,12 @@ describe('Componente Consulta', () => {
 	});
 
 	test('Maneja los errores correctamente', async () => {
-		// Simula un error HTTP en la respuesta de la API
 		fetchMock.mock('http://localhost:8080/consulta', 500);
 
 		const mockAddError = jest.fn();
+		const mockSetCurrentComponent = jest.fn();
 
-		renderWithProviders(<Consulta />, null, { errors: {}, addError: mockAddError, removeError: (errorKey: string) => { console.log(`removeError called with key: ${errorKey}`); }, setErrors: (errors: ErrorType) => { console.log(`setErrors called with errors: ${JSON.stringify(errors)}`); } });
+		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} />, null, { errors: {}, addError: mockAddError, removeError: (errorKey: string) => { console.log(`removeError called with key: ${errorKey}`); }, setErrors: (errors: ErrorType) => { console.log(`setErrors called with errors: ${JSON.stringify(errors)}`); } });
 
 		await waitFor(() => {
 			expect(mockAddError).toHaveBeenCalled()
@@ -42,8 +42,9 @@ describe('Componente Consulta', () => {
 			],
 		);
 
-		// Envuelve el componente en un QueryClientProvider y ConsultaContext.Provider
-		renderWithProviders(<Consulta />, null);
+		const mockSetCurrentComponent = jest.fn();
+
+		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} />, null);
 
 		await waitFor(() => {
 			expect(screen.getByText('Test Country')).toBeInTheDocument();

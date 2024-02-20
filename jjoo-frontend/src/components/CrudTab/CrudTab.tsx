@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SedesTable from '../SedesTable/SedesTable';
 import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
@@ -8,7 +8,7 @@ import { newtonsCradle } from 'ldrs';
 import NotificacionError from '../../NotificacionError/NotificacionError';
 import { useCrudTab } from '../../hooks/useCrudTab';
 
-const CrudTab = () => {
+const CrudTab = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
   const {
     ciudades,
     ciudadesPending,
@@ -26,6 +26,10 @@ const CrudTab = () => {
   } = useCrudTab();
 
   newtonsCradle.register()
+
+  useEffect(() => {
+    setCurrentComponent('CrudTab');
+  }, []);
 
   if (ciudadesPending || isPostingSede) return (
     <div className='loader'>
