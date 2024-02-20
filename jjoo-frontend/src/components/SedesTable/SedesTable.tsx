@@ -8,7 +8,7 @@ import FilaSede from '../FilaSede/FilaSede';
 import { useSedesTable } from '../../hooks/useSedesTable';
 import NotificacionError from '../../NotificacionError/NotificacionError';
 
-const SedesTable = () => {
+const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
   const { sedesConNombreCiudad, sedesPending, sedesError, ciudadesPending, ciudadesError } = useSedesTable();
 
   if (sedesPending || ciudadesPending) return <div>Loading...</div>
@@ -29,7 +29,7 @@ const SedesTable = () => {
           </TableHead>
           <TableBody>
             {sedesConNombreCiudad.sort((a: Sede, b: Sede) => a.año - b.año).map((sede: Sede) => (
-              <FilaSede key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`} sede={sede} />
+              <FilaSede key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`} sede={sede} setCurrentComponent={setCurrentComponent} />
             ))}
           </TableBody>
         </Table>

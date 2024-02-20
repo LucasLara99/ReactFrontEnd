@@ -44,10 +44,12 @@ describe("FilaSede component", () => {
             isLoagingMutation: false,
         });
 
+        const mockSetCurrentComponent = jest.fn();
+
         render(
             <Table>
                 <TableBody>
-                    <FilaSede sede={mockSede} />
+                    <FilaSede sede={mockSede} setCurrentComponent={mockSetCurrentComponent} />
                 </TableBody>
             </Table>
         );

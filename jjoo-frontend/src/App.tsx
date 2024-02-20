@@ -24,9 +24,9 @@ function App() {
     <ErrorProvider>
       <QueryClientProvider client={queryClient}>
         <div>
-          <Portal />
-          <PortalMessage>{`Estoy en ${currentComponent}`}</PortalMessage>
           <div className="tabs-container">
+            <Portal />
+            <PortalMessage>{`Estoy en ${currentComponent}`}</PortalMessage>
             <Tabs value={Number(value)} onChange={handleChange}>
               <Tab label="Consulta" style={{ color: '#ffffff' }} />
               <Tab label="CRUD de SedeJJOO" style={{ color: '#ffffff' }} />

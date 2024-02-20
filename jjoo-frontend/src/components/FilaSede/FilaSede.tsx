@@ -7,7 +7,7 @@ import { useUpdateSede } from '../../hooks/useUpdateSede';
 import { useDeleteSede } from '../../hooks/useDeleteSede';
 import { ErrorContext } from '../../hooks/ErrorContext';
 
-export const FilaSede = ({ sede }: { sede: Sede }) => {
+export const FilaSede = ({ sede, setCurrentComponent }: { sede: Sede, setCurrentComponent: (component: string) => void }) => {
   const [editing, setEditing] = useState(false);
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
   const { addError } = useContext(ErrorContext);
@@ -26,6 +26,7 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
     if (isSedeUpdating) return;
     mutate({ ...sede, idCiudad });
     setEditing(false);
+    setCurrentComponent('CrudTab')
   };
 
   const handleDelete = () => {
@@ -57,7 +58,10 @@ export const FilaSede = ({ sede }: { sede: Sede }) => {
         {editing ? (
           <Button disabled={isSedeUpdating} onClick={handleUpdate}>Actualizar</Button>
         ) : (
-          <Button onClick={() => setEditing(true)}>Editar</Button>
+          <Button onClick={() => {
+            setEditing(true);
+            setCurrentComponent('edición');
+          }}>Editar</Button>
         )}
       </TableCell>
       <TableCell>

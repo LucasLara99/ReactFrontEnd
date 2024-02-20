@@ -46,7 +46,7 @@ const CrudTab = ({ setCurrentComponent }: { setCurrentComponent: (component: str
   return (
     <div className='crud-tab-container'>
       <div className='table-container'>
-        <SedesTable />
+        <SedesTable setCurrentComponent={setCurrentComponent} />
       </div>
       <Accordion className="crud-tab-accordion" expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
