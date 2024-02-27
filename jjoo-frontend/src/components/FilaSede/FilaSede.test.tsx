@@ -29,7 +29,6 @@ describe("FilaSede component", () => {
     ];
 
     beforeEach(() => {
-        // Setup the hooks
         (useGetCiudades as jest.Mock).mockReturnValue({
             data: mockCiudades,
             isPending: false,
@@ -49,7 +48,7 @@ describe("FilaSede component", () => {
         render(
             <Table>
                 <TableBody>
-                    <FilaSede sede={mockSede} setCurrentComponent={mockSetCurrentComponent} />
+                    <FilaSede sede={mockSede} setCurrentComponent={mockSetCurrentComponent} style={{}} />
                 </TableBody>
             </Table>
         );
@@ -76,6 +75,5 @@ describe("FilaSede component", () => {
         expect(updateButton).toBeInTheDocument();
 
         fireEvent.click(deleteButton);
-        // Aquí puedes agregar expectativas para verificar el comportamiento después de hacer clic en el botón de borrar
     });
 });

@@ -6,8 +6,9 @@ import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { useUpdateSede } from '../../hooks/useUpdateSede';
 import { useDeleteSede } from '../../hooks/useDeleteSede';
 import { ErrorContext } from '../../hooks/ErrorContext';
+import './FilaSede.css';  
 
-export const FilaSede = ({ sede, setCurrentComponent }: { sede: Sede, setCurrentComponent: (component: string) => void }) => {
+export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, setCurrentComponent: (component: string) => void, style: React.CSSProperties }) => {
   const [editing, setEditing] = useState(false);
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
   const { addError } = useContext(ErrorContext);
@@ -35,10 +36,10 @@ export const FilaSede = ({ sede, setCurrentComponent }: { sede: Sede, setCurrent
   };
 
   return (
-    <TableRow key={sede.año}>
-      <TableCell>{sede.año}</TableCell>
-      <TableCell>{sede.description}</TableCell>
-      <TableCell>
+    <div className='fila-sede' style={style}>
+      <div className='fila-sede-item'>{sede.año}</div>
+      <div className='fila-sede-item'>{sede.description}</div>
+      <div className='fila-sede-item'>
         {editing ? (
           <Select
             value={idCiudad}
@@ -53,8 +54,8 @@ export const FilaSede = ({ sede, setCurrentComponent }: { sede: Sede, setCurrent
         ) : (
           ciudades.find((ciudad: Ciudad) => ciudad.idCiudad === idCiudad)?.nombreCiudad
         )}
-      </TableCell>
-      <TableCell>
+      </div>
+      <div className='fila-sede-item'>
         {editing ? (
           <Button disabled={isSedeUpdating} onClick={handleUpdate}>Actualizar</Button>
         ) : (
@@ -63,11 +64,11 @@ export const FilaSede = ({ sede, setCurrentComponent }: { sede: Sede, setCurrent
             setCurrentComponent('edición');
           }}>Editar</Button>
         )}
-      </TableCell>
-      <TableCell>
+      </div>
+      <div className='fila-sede-item'>
         <Button onClick={handleDelete}>Borrar</Button>
-      </TableCell>
-    </TableRow>
+      </div>
+    </div>
   );
 };
 

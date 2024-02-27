@@ -1,0 +1,4 @@
+.fila-sede {
+    display: flex;
+    justify-content: space-between;
+}
