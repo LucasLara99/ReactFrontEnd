@@ -6,6 +6,7 @@ import './Consulta.css';
 import { ErrorContext } from '../../hooks/ErrorContext';
 import NotificacionError from '../../NotificacionError/NotificacionError';
 import { newtonsCradle } from 'ldrs'
+import PortalMessage from '../PortalMessage/PortalMessage';
 
 interface Item {
   id_pais: number;
@@ -17,7 +18,12 @@ interface Item {
   numero_veces_sede: number;
 }
 
-const Consulta = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
+interface ConsultaProps {
+  setCurrentComponent: (component: string) => void;
+  label: string;
+}
+
+const Consulta = ({ setCurrentComponent, label }: ConsultaProps) => {
   const { addError } = useContext(ErrorContext);
   const handleError = (error: Error) => {
     addError({ consultaError: error.toString() });
@@ -45,38 +51,41 @@ const Consulta = ({ setCurrentComponent }: { setCurrentComponent: (component: st
   }
 
   return (
-    <ConsultaContext.Provider value={data}>
-      <div className='consulta'>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID País</TableCell>
-                <TableCell>Nombre País</TableCell>
-                <TableCell>ID Ciudad</TableCell>
-                <TableCell>Nombre Ciudad</TableCell>
-                <TableCell>Valor</TableCell>
-                <TableCell>Descripción</TableCell>
-                <TableCell>Número Veces Sede</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data && data.map((item: Item, index: number) => (
-                <TableRow key={`${item.id_pais}-${item.id_ciudad}-${index}`}>
-                  <TableCell>{item.id_pais}</TableCell>
-                  <TableCell>{item.nombre_pais}</TableCell>
-                  <TableCell>{item.id_ciudad}</TableCell>
-                  <TableCell>{item.nombre_ciudad}</TableCell>
-                  <TableCell>{item.valor}</TableCell>
-                  <TableCell>{item.descripcion_tipo_jjoo}</TableCell>
-                  <TableCell>{item.numero_veces_sede}</TableCell>
+    <div>
+      <ConsultaContext.Provider value={data}>
+        <div className='consulta'>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID País</TableCell>
+                  <TableCell>Nombre País</TableCell>
+                  <TableCell>ID Ciudad</TableCell>
+                  <TableCell>Nombre Ciudad</TableCell>
+                  <TableCell>Valor</TableCell>
+                  <TableCell>Descripción</TableCell>
+                  <TableCell>Número Veces Sede</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </ConsultaContext.Provider>
+              </TableHead>
+              <TableBody>
+                {data && data.map((item: Item, index: number) => (
+                  <TableRow key={`${item.id_pais}-${item.id_ciudad}-${index}`}>
+                    <TableCell>{item.id_pais}</TableCell>
+                    <TableCell>{item.nombre_pais}</TableCell>
+                    <TableCell>{item.id_ciudad}</TableCell>
+                    <TableCell>{item.nombre_ciudad}</TableCell>
+                    <TableCell>{item.valor}</TableCell>
+                    <TableCell>{item.descripcion_tipo_jjoo}</TableCell>
+                    <TableCell>{item.numero_veces_sede}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      </ConsultaContext.Provider>
+      <PortalMessage label={label} />
+    </div>
   );
 };
 

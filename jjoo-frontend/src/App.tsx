@@ -26,13 +26,15 @@ function App() {
         <div>
           <div className="tabs-container">
             <Portal />
-            <PortalMessage>{`Estoy en ${currentComponent}`}</PortalMessage>
             <Tabs value={Number(value)} onChange={handleChange}>
               <Tab label="Consulta" style={{ color: '#ffffff' }} />
               <Tab label="CRUD de SedeJJOO" style={{ color: '#ffffff' }} />
             </Tabs>
           </div>
-          {value === '0' ? <Consulta setCurrentComponent={setCurrentComponent} /> : <CrudTab setCurrentComponent={setCurrentComponent} />}
+          {value === '0' ?
+            <Consulta setCurrentComponent={setCurrentComponent} label={`Estoy en ${currentComponent}`} />
+            :
+            <CrudTab setCurrentComponent={setCurrentComponent} label={`Estoy en ${currentComponent}`} />}
         </div>
       </QueryClientProvider>
     </ErrorProvider>

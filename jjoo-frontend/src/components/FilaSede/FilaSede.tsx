@@ -61,7 +61,7 @@ export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, set
         ) : (
           <Button onClick={() => {
             setEditing(true);
-            setCurrentComponent('edición');
+            
           }}>Editar</Button>
         )}
       </div>

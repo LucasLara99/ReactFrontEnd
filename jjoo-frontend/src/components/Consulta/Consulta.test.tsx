@@ -20,7 +20,7 @@ describe('Componente Consulta', () => {
 		const mockAddError = jest.fn();
 		const mockSetCurrentComponent = jest.fn();
 
-		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} />, null, { errors: {}, addError: mockAddError, removeError: (errorKey: string) => { console.log(`removeError called with key: ${errorKey}`); }, setErrors: (errors: ErrorType) => { console.log(`setErrors called with errors: ${JSON.stringify(errors)}`); } });
+		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} label="Test Label" />, null, { errors: {}, addError: mockAddError, removeError: (errorKey: string) => { console.log(`removeError called with key: ${errorKey}`); }, setErrors: (errors: ErrorType) => { console.log(`setErrors called with errors: ${JSON.stringify(errors)}`); } });
 
 		await waitFor(() => {
 			expect(mockAddError).toHaveBeenCalled()
@@ -44,7 +44,7 @@ describe('Componente Consulta', () => {
 
 		const mockSetCurrentComponent = jest.fn();
 
-		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} />, null);
+		renderWithProviders(<Consulta setCurrentComponent={mockSetCurrentComponent} label="Test Label" />, null);
 
 		await waitFor(() => {
 			expect(screen.getByText('Test Country')).toBeInTheDocument();
