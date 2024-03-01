@@ -52,9 +52,7 @@ const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
   return (
     <div>
       <div className='crud-tab-container'>
-        <div className='table-container'>
-          <SedesTable setCurrentComponent={setCurrentComponent} />
-        </div>
+        <SedesTable setCurrentComponent={setCurrentComponent} />
         <Accordion className="crud-tab-accordion" expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

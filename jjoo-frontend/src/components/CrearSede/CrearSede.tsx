@@ -23,7 +23,7 @@ const CrearSede: React.FC<CrearSedeProps> = ({ ciudades, ciudadSeleccionada, set
   return (
     <div className='main-container'>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} direction="row" alignItems="center">
           <Grid item xs={3}>
             <InputLabel id="ciudad-label" className='inputlabel'>Seleccione la ciudad</InputLabel>
             <Select

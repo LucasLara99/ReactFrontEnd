@@ -6,21 +6,15 @@
     margin-top: 2em;
 }
 
-.table-container {
+.crud-tab-accordion {
     width: 80%;
-}
-
-.crud-tab-accordion{
-    width: 77%;
-    padding: 1em;
     margin-top: 2em !important;
     margin-bottom: 4em !important;
     background-color: #aaa;
 }
 
-.crud-tab-accordion .MuiAccordionDetails-root {
+.crear-sede {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
-

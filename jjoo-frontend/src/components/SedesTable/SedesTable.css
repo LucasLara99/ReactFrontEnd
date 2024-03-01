@@ -1,49 +1,12 @@
+.main {
+    width: 80%;
+}
+
 .lista-sedes-container {
-    margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70vh;
-    background-color: #2196f3;
-    border-radius: 10px;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 .lista-sedes-header {
-    margin-bottom: 1em;
-    color: white;
     display: flex;
-    justify-content: space-between;
-    width: 95%;
-}
-
-.span1 {
-    flex: 1.75;
-}
-
-.span2 {
-    flex: 2;
-}
-
-.span3 {
-    flex: 2;
-}
-
-.span4 {
-    flex: 2;
-}
-
-.span5 {
-    flex: 0.45;
-}
-
-.lista-sedes {
-    background-color: white;
-    border-radius: 10px;
-    padding: 1em;
-}
-
-.borrar {
-    margin-right: 1em;
+    justify-content: space-around
 }

@@ -1,9 +1,9 @@
 .fila-sede {
     display: flex;
     align-items: center;
-    gap: 30px;
 }
 
 .fila-sede-item {
     flex: 1;
+    text-align: center;
 }
