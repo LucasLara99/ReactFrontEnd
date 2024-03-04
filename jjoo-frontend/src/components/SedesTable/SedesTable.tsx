@@ -6,6 +6,8 @@ import { useSedesTable } from '../../hooks/useSedesTable';
 import NotificacionError from '../../NotificacionError/NotificacionError';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
   const { sedesConNombreCiudad, sedesPending, sedesError, ciudadesPending, ciudadesError } = useSedesTable();
@@ -17,15 +19,17 @@ const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: 
 
   return (
     <div className='main'>
-      <div className='lista-sedes-header'>
-        <span className='span1'>Año</span>
-        <span className='span2'>Temporada</span>
-        <span className='span3'>Ciudad</span>
-        <span className='span4'>Editar</span>
-        <span className='span5'>Borrar</span>
+      <div className='header-container'>
+        <div className='header'>
+          <span className='span1'>Año</span>
+          <span className='span2'>Temporada</span>
+          <span className='span3'>Ciudad</span>
+          <span className='span4'><EditIcon /></span>
+          <span className='span5'><DeleteOutlineIcon /></span>
+        </div>
       </div>
       <div className='lista-sedes-container'>
-        <AutoSizer style={{ height: '600px', width: '100%' }}>
+        <AutoSizer style={{ height: '480px', width: '100%' }}>
           {({ height, width }: { height: number, width: number }) => (
             <List
               height={height}
