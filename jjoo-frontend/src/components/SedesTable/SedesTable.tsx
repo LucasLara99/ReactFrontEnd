@@ -18,7 +18,7 @@ const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: 
   const sortedSedes = sedesConNombreCiudad.sort((a: Sede, b: Sede) => a.año - b.año);
 
   return (
-    <div className='main'>
+    <div className='main-container'>
       <div className='header-container'>
         <div className='header'>
           <span className='span1'>Año</span>
