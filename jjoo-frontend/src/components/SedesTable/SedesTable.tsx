@@ -9,7 +9,12 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: string) => void }) => {
+interface SedesTableProps {
+  setCurrentComponent: (component: string) => void;
+  onEdit: (isEditing: boolean) => void;
+}
+
+const SedesTable = ({ onEdit }: SedesTableProps) => {
   const { sedesConNombreCiudad, sedesPending, sedesError, ciudadesPending, ciudadesError } = useSedesTable();
 
   if (sedesPending || ciudadesPending) return <div>Loading...</div>
@@ -40,7 +45,11 @@ const SedesTable = ({ setCurrentComponent }: { setCurrentComponent: (component: 
               {({ index, style }: { index: number, style: React.CSSProperties }) => {
                 const sede = sortedSedes[index];
                 return (
-                  <FilaSede key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`} sede={sede} setCurrentComponent={setCurrentComponent} style={style} />
+                  <FilaSede
+                    key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`}
+                    sede={sede}
+                    style={style}
+                    onEdit={onEdit} />
                 );
               }}
             </List>

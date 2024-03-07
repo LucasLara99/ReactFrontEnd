@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Sede } from '../../models/Sede';
 import { Ciudad } from '../../models/Ciudad';
-import { TableRow, TableCell, Button, Select, MenuItem } from '@mui/material';
+import { Button, Select, MenuItem } from '@mui/material';
 import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { useUpdateSede } from '../../hooks/useUpdateSede';
 import { useDeleteSede } from '../../hooks/useDeleteSede';
 import { ErrorContext } from '../../hooks/ErrorContext';
-import './FilaSede.css';  
+import './FilaSede.css';
 
-export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, setCurrentComponent: (component: string) => void, style: React.CSSProperties }) => {
-  const [editing, setEditing] = useState(false);
+export const FilaSede = ({ sede, style, onEdit }: { sede: Sede, style: React.CSSProperties, onEdit: (isEditing: boolean) => void }) => {
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
+  const [isEditing, setIsEditing] = useState(false);
   const { addError } = useContext(ErrorContext);
   const handleError = (error: Error) => {
     addError({ filaError: error.toString() });
@@ -26,8 +26,8 @@ export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, set
   const handleUpdate = () => {
     if (isSedeUpdating) return;
     mutate({ ...sede, idCiudad });
-    setEditing(false);
-    setCurrentComponent('CrudTab')
+    onEdit(false)
+    setIsEditing(false);
   };
 
   const handleDelete = () => {
@@ -40,7 +40,7 @@ export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, set
       <div className='fila-sede-item'>{sede.año}</div>
       <div className='fila-sede-item'>{sede.description}</div>
       <div className='fila-sede-item'>
-        {editing ? (
+        {isEditing ? (
           <Select
             value={idCiudad}
             onChange={event => setIdCiudad(Number(event.target.value))}
@@ -56,12 +56,12 @@ export const FilaSede = ({ sede, setCurrentComponent, style }: { sede: Sede, set
         )}
       </div>
       <div className='fila-sede-item'>
-        {editing ? (
+        {isEditing ? (
           <Button disabled={isSedeUpdating} onClick={handleUpdate}>Actualizar</Button>
         ) : (
           <Button onClick={() => {
-            setEditing(true);
-            
+            setIsEditing(true);
+            onEdit(true)
           }}>Editar</Button>
         )}
       </div>

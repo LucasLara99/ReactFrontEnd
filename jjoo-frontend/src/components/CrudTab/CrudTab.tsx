@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SedesTable from '../SedesTable/SedesTable';
 import CrearSede from '../CrearSede/CrearSede';
 import './CrudTab.css';
@@ -15,6 +15,7 @@ interface CrudTabProps {
 }
 
 const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
+  const [isAnyEditing, setIsAnyEditing] = useState<boolean>(false);
   const {
     ciudades,
     ciudadesPending,
@@ -30,6 +31,12 @@ const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
     handleSubmit,
     isPostingSede
   } = useCrudTab();
+
+  const handleEdit = (isEditing: boolean) => {
+    setIsAnyEditing(isEditing);
+    console.log(isEditing)
+    setCurrentComponent('Editando')
+  };
 
   newtonsCradle.register()
 
@@ -52,7 +59,7 @@ const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
   return (
     <div>
       <div className='crud-tab-container'>
-        <SedesTable setCurrentComponent={setCurrentComponent} />
+        <SedesTable setCurrentComponent={setCurrentComponent} onEdit={handleEdit} />
         <Accordion className="crud-tab-accordion" expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

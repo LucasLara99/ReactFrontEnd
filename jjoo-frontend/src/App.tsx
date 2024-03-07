@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab';
 import CrudTab from './components/CrudTab/CrudTab';
 import Consulta from './components/Consulta/Consulta';
 import Portal from './components/Portal/Portal';
-import PortalMessage from './components/PortalMessage/PortalMessage';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorProvider } from './hooks/ErrorContext';

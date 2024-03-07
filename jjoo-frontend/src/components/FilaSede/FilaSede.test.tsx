@@ -28,6 +28,8 @@ describe("FilaSede component", () => {
         { idCiudad: 2, nombreCiudad: 'Ciudad2' },
     ];
 
+    let mockOnEdit = jest.fn();
+
     beforeEach(() => {
         (useGetCiudades as jest.Mock).mockReturnValue({
             data: mockCiudades,
@@ -43,12 +45,14 @@ describe("FilaSede component", () => {
             isLoagingMutation: false,
         });
 
-        const mockSetCurrentComponent = jest.fn();
-
         render(
             <Table>
                 <TableBody>
-                    <FilaSede sede={mockSede} setCurrentComponent={mockSetCurrentComponent} style={{}} />
+                    <FilaSede
+                        sede={mockSede}
+                        onEdit={mockOnEdit}
+                        style={{}}
+                    />
                 </TableBody>
             </Table>
         );
