@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useGetConsulta } from '../../hooks/useGetConsulta';
 import { ConsultaContext } from './ConsultaContext';
-import './Consulta.css';
+import './Consulta.css'; // Si deseas mantener estilos personalizados
 import { ErrorContext } from '../../hooks/ErrorContext';
 import NotificacionError from '../../NotificacionError/NotificacionError';
 import { newtonsCradle } from 'ldrs'
@@ -54,6 +54,9 @@ const Consulta = ({ setCurrentComponent, label }: ConsultaProps) => {
     <div>
       <ConsultaContext.Provider value={data}>
         <div className='consulta'>
+          <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+            Badge
+          </span>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

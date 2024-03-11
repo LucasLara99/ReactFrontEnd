@@ -33,7 +33,7 @@ function App() {
           {value === '0' ?
             <Consulta setCurrentComponent={setCurrentComponent} label={`Estoy en ${currentComponent}`} />
             :
-            <CrudTab setCurrentComponent={setCurrentComponent} label={`Estoy en ${currentComponent}`} />}
+            <CrudTab setCurrentComponent={setCurrentComponent} />}
         </div>
       </QueryClientProvider>
     </ErrorProvider>

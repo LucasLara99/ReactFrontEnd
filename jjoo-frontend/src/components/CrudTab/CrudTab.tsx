@@ -11,11 +11,10 @@ import PortalMessage from '../PortalMessage/PortalMessage';
 
 interface CrudTabProps {
   setCurrentComponent: (component: string) => void;
-  label: string;
 }
 
-const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
-  const [isAnyEditing, setIsAnyEditing] = useState<boolean>(false);
+const CrudTab = ({ setCurrentComponent }: CrudTabProps) => {
+  const [isEditing, setIsEditing] = useState(false);
   const {
     ciudades,
     ciudadesPending,
@@ -33,28 +32,30 @@ const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
   } = useCrudTab();
 
   const handleEdit = (isEditing: boolean) => {
-    setIsAnyEditing(isEditing);
-    console.log(isEditing)
-    setCurrentComponent('Editando')
+    setIsEditing(isEditing);
   };
 
-  newtonsCradle.register()
+  newtonsCradle.register();
 
   useEffect(() => {
-    setCurrentComponent('CrudTab');
-  }, []);
+    setCurrentComponent(isEditing ? 'Editando' : 'CrudTab');
+  }, [isEditing]);
 
-  if (ciudadesPending || isPostingSede) return (
-    <div className='loader'>
-      <l-newtons-cradle
-        size="100"
-        speed="1.4"
-        color="#2196f3"
-      ></l-newtons-cradle>
-    </div>
-  )
+  if (ciudadesPending || isPostingSede) {
+    return (
+      <div className='loader'>
+        <l-newtons-cradle
+          size="100"
+          speed="1.4"
+          color="#2196f3"
+        ></l-newtons-cradle>
+      </div>
+    );
+  }
 
-  if (ciudadesError) return <NotificacionError />
+  if (ciudadesError) {
+    return <NotificacionError />;
+  }
 
   return (
     <div>
@@ -82,7 +83,7 @@ const CrudTab = ({ setCurrentComponent, label }: CrudTabProps) => {
           </div>
         </Accordion>
       </div>
-      <PortalMessage label={label} />
+      <PortalMessage label={`Estoy ${isEditing ? 'editando' : 'en CrudTab'}`} />
     </div>
   );
 };
