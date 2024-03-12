@@ -1,5 +1,12 @@
 .tabs-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #2196f3;
+}
+
+.tabs-container > div:first-child {
+  position: absolute;
+  left: 0;
+  margin-left: 1em;
 }

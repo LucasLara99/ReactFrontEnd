@@ -24,7 +24,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div>
           <div className="tabs-container">
-            <Portal />
+            <div>
+              <Portal />
+            </div>
             <Tabs value={Number(value)} onChange={handleChange}>
               <Tab label="Consulta" style={{ color: '#ffffff' }} />
               <Tab label="CRUD de SedeJJOO" style={{ color: '#ffffff' }} />

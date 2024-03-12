@@ -51,56 +51,32 @@ const Consulta = ({ setCurrentComponent, label }: ConsultaProps) => {
   }
 
   return (
-    <div>
+    <div className="px-20 py-10">
       <ConsultaContext.Provider value={data}>
         <div className='consulta'>
-          <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
-            Badge
-          </span>
-          <span className="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
-            Badge
-          </span>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} className="shadow-lg rounded-lg">
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID País</TableCell>
-                  <TableCell>Nombre País</TableCell>
-                  <TableCell>ID Ciudad</TableCell>
-                  <TableCell>Nombre Ciudad</TableCell>
-                  <TableCell>Valor</TableCell>
-                  <TableCell>Descripción</TableCell>
-                  <TableCell>Número Veces Sede</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">ID País</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">Nombre País</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">ID Ciudad</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">Nombre Ciudad</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">Valor</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">Descripción</TableCell>
+                  <TableCell className="px-6 py-3 text-xs font-medium uppercase">Número Veces Sede</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody className="bg-white divide-y divide-gray-200">
                 {data && data.map((item: Item, index: number) => (
-                  <TableRow key={`${item.id_pais}-${item.id_ciudad}-${index}`}>
-                    <TableCell>{item.id_pais}</TableCell>
-                    <TableCell>{item.nombre_pais}</TableCell>
-                    <TableCell>{item.id_ciudad}</TableCell>
-                    <TableCell>{item.nombre_ciudad}</TableCell>
-                    <TableCell>{item.valor}</TableCell>
-                    <TableCell>{item.descripcion_tipo_jjoo}</TableCell>
-                    <TableCell>{item.numero_veces_sede}</TableCell>
+                  <TableRow key={`${item.id_pais}-${item.id_ciudad}-${index}`} className="hover:bg-gray-100">
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.id_pais}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.nombre_pais}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.id_ciudad}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.nombre_ciudad}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.valor}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.descripcion_tipo_jjoo}</TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap">{item.numero_veces_sede}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
