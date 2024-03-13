@@ -1,6 +1,5 @@
 import React from 'react';
 import { Sede } from '../../models/Sede';
-import './SedesTable.css';
 import FilaSede from '../FilaSede/FilaSede';
 import { useSedesTable } from '../../hooks/useSedesTable';
 import NotificacionError from '../../NotificacionError/NotificacionError';
@@ -23,17 +22,17 @@ const SedesTable = ({ onEdit }: SedesTableProps) => {
   const sortedSedes = sedesConNombreCiudad.sort((a: Sede, b: Sede) => a.año - b.año);
 
   return (
-    <div className='main-container'>
-      <div className='header-container'>
-        <div className='header'>
-          <span className='span1'>Año</span>
-          <span className='span2'>Temporada</span>
-          <span className='span3'>Ciudad</span>
-          <span className='span4'><EditIcon /></span>
-          <span className='span5'><DeleteOutlineIcon /></span>
+    <div className='w-4/5 mt-4'>
+      <div className='rounded-t-lg bg-custom-blue text-white'>
+        <div className='flex'>
+          <span className='m-2 flex justify-center items-center flex-1'>Año</span>
+          <span className='m-2 flex justify-center items-center flex-1'>Temporada</span>
+          <span className='m-2 flex justify-center items-center flex-1'>Ciudad</span>
+          <span className='m-2 flex justify-center items-center flex-1'><EditIcon /></span>
+          <span className='mt-2 mb-2 mr-7 flex justify-center items-center flex-1'><DeleteOutlineIcon /></span>
         </div>
       </div>
-      <div className='lista-sedes-container'>
+      <div className='shadow-lg'>
         <AutoSizer style={{ height: '480px', width: '100%' }}>
           {({ height, width }: { height: number, width: number }) => (
             <List

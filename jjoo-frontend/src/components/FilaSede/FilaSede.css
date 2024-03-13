@@ -1,9 +1,0 @@
-.fila-sede {
-    display: flex;
-    align-items: center;
-}
-
-.fila-sede-item {
-    flex: 1;
-    text-align: center;
-}

@@ -6,7 +6,6 @@ import { useGetCiudades } from '../../hooks/useGetCiudades';
 import { useUpdateSede } from '../../hooks/useUpdateSede';
 import { useDeleteSede } from '../../hooks/useDeleteSede';
 import { ErrorContext } from '../../hooks/ErrorContext';
-import './FilaSede.css';
 
 export const FilaSede = ({ sede, style, onEdit }: { sede: Sede, style: React.CSSProperties, onEdit: (isEditing: boolean) => void }) => {
   const [idCiudad, setIdCiudad] = useState(sede.idCiudad);
@@ -36,10 +35,10 @@ export const FilaSede = ({ sede, style, onEdit }: { sede: Sede, style: React.CSS
   };
 
   return (
-    <div className='fila-sede' style={style}>
-      <div className='fila-sede-item'>{sede.año}</div>
-      <div className='fila-sede-item'>{sede.description}</div>
-      <div className='fila-sede-item'>
+    <div className='flex justify-between items-center' style={style}>
+      <div className='m-2 flex justify-center items-center flex-1'>{sede.año}</div>
+      <div className='m-2 flex justify-center items-center flex-1'>{sede.description}</div>
+      <div className='m-2 flex justify-center items-center flex-1'>
         {isEditing ? (
           <Select
             value={idCiudad}
@@ -55,7 +54,7 @@ export const FilaSede = ({ sede, style, onEdit }: { sede: Sede, style: React.CSS
           ciudades.find((ciudad: Ciudad) => ciudad.idCiudad === idCiudad)?.nombreCiudad
         )}
       </div>
-      <div className='fila-sede-item'>
+      <div className='m-2 flex justify-center items-center flex-1'>
         {isEditing ? (
           <Button disabled={isSedeUpdating} onClick={handleUpdate}>Actualizar</Button>
         ) : (
@@ -65,7 +64,7 @@ export const FilaSede = ({ sede, style, onEdit }: { sede: Sede, style: React.CSS
           }}>Editar</Button>
         )}
       </div>
-      <div className='fila-sede-item'>
+      <div className='m-2 flex justify-center items-center flex-1'>
         <Button onClick={handleDelete}>Borrar</Button>
       </div>
     </div>
