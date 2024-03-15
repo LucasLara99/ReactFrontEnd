@@ -83,7 +83,7 @@ const CrudTab = ({ setCurrentComponent }: CrudTabProps) => {
           </div>
         </Accordion>
       </div>
-      <PortalMessage label={`Estoy ${isEditing ? 'editando' : 'en CrudTab'}`} />
+      {isEditing ? <PortalMessage label={'Estoy editando'} /> : <PortalMessage label={'Estoy en CrudTab'} />}
     </div>
   );
 };

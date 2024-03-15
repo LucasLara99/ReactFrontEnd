@@ -25,9 +25,9 @@ const SedesTable = ({ onEdit }: SedesTableProps) => {
     <div className='w-4/5 mt-4'>
       <div className='rounded-t-lg bg-custom-blue text-white'>
         <div className='flex'>
-          <span className='m-2 flex justify-center items-center flex-1'>Año</span>
-          <span className='m-2 flex justify-center items-center flex-1'>Temporada</span>
-          <span className='m-2 flex justify-center items-center flex-1'>Ciudad</span>
+          <span className='m-2 mt-4 mb-4 flex justify-center items-center flex-1'>AÑO</span>
+          <span className='m-2 flex justify-center items-center flex-1'>TEMPORADA</span>
+          <span className='m-2 flex justify-center items-center flex-1'>CIUDAD</span>
           <span className='m-2 flex justify-center items-center flex-1'><EditIcon /></span>
           <span className='mt-2 mb-2 mr-7 flex justify-center items-center flex-1'><DeleteOutlineIcon /></span>
         </div>
