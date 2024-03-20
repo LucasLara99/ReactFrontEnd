@@ -14,7 +14,6 @@ interface CrudTabProps {
 }
 
 const CrudTab = ({ setCurrentComponent }: CrudTabProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const {
     ciudades,
     ciudadesPending,
@@ -31,15 +30,18 @@ const CrudTab = ({ setCurrentComponent }: CrudTabProps) => {
     isPostingSede
   } = useCrudTab();
 
-  const handleEdit = (isEditing: boolean) => {
-    setIsEditing(isEditing);
-  };
+  const [isEditing, setIsEditing] = useState(false);
+  //const [editingRowId, setEditingRowId] = useState<string | null>(null); // Aquí se almacenará el ID de la fila en edición
 
   newtonsCradle.register();
 
   useEffect(() => {
     setCurrentComponent(isEditing ? 'Editando' : 'CrudTab');
   }, [isEditing]);
+
+  const handleEdit = (editing: boolean) => {
+    setIsEditing(editing);
+  };
 
   if (ciudadesPending || isPostingSede) {
     return (

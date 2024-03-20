@@ -16,6 +16,7 @@ jest.mock('../../hooks/useDeleteSede');
 
 describe("FilaSede component", () => {
     const mockSede: Sede = {
+        id: '',
         año: 2020,
         description: 'Test Description',
         idCiudad: 1,

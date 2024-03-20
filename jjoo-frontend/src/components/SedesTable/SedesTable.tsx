@@ -10,14 +10,14 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 interface SedesTableProps {
   setCurrentComponent: (component: string) => void;
-  onEdit: (isEditing: boolean) => void;
+  onEdit: (isEditing: boolean) => void; // Actualización de la función de callback
 }
 
 const SedesTable = ({ onEdit }: SedesTableProps) => {
   const { sedesConNombreCiudad, sedesPending, sedesError, ciudadesPending, ciudadesError } = useSedesTable();
 
-  if (sedesPending || ciudadesPending) return <div>Loading...</div>
-  if (sedesError || ciudadesError) return <NotificacionError />
+  if (sedesPending || ciudadesPending) return <div>Loading...</div>;
+  if (sedesError || ciudadesError) return <NotificacionError />;
 
   const sortedSedes = sedesConNombreCiudad.sort((a: Sede, b: Sede) => a.año - b.año);
 
@@ -43,12 +43,14 @@ const SedesTable = ({ onEdit }: SedesTableProps) => {
             >
               {({ index, style }: { index: number, style: React.CSSProperties }) => {
                 const sede = sortedSedes[index];
+                const id = `${sede.año}-${sede.description}-${sede.nombreCiudad}`; // Crear ID
                 return (
                   <FilaSede
-                    key={`${sede.año}-${sede.description}-${sede.nombreCiudad}`}
-                    sede={sede}
+                    key={id} // Usar el ID como clave
+                    sede={sede} // Pasar la sede
                     style={style}
-                    onEdit={onEdit} />
+                    onEdit={onEdit} // Pasar el callback de edición
+                  />
                 );
               }}
             </List>
