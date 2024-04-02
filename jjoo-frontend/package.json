@@ -28,8 +28,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "electron ./main.js",
-    "electron-start": "electron ./main.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
