@@ -1,19 +1,16 @@
-import { useState, useEffect } from 'react';
-import Store from 'electron-store';
+import { useState, useEffect } from 'react'
 
-const store = new Store();
-
-function useFavTab(defaultValue: string, key: string): [string, React.Dispatch<React.SetStateAction<string>>] {
+function useFavTab(defaultValue: string, key: string) {
     const [state, setState] = useState(() => {
-        const storedValue = store.get(key);
-        return (typeof storedValue === 'string') ? storedValue : defaultValue;
-    });
+        const storedValue = localStorage.getItem(key)
+        return storedValue !== null ? JSON.parse(storedValue) : defaultValue
+    })
 
     useEffect(() => {
-        store.set(key, state);
-    }, [key, state]);
+        localStorage.setItem(key, JSON.stringify(state))
+    }, [key, state])
 
-    return [state, setState];
+    return [state, setState]
 }
 
-export default useFavTab;
+export default useFavTab
