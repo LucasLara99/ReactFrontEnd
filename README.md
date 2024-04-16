@@ -14,10 +14,6 @@ Seleccionar una librería de componentes para construír la aplicación (materia
 
 Implementar una interfaz basada en dos pantallas o "tabs" que corresponderán a los datos de LA CONSULTA y las operaciones del CRUD de SedeJJOO respectivamente
 
-- Para este paso, los datos pueden y deberían estar mockeados
-- Centrarse en la generación o uso de componentes que sirvan para mostrar tablas de datos
-- Hay dos maneras fundamentales de usar la url para esta finalidad, discutiremos pros y contras
-
 ## Paso 4
 
 Conectar con backend. Fetch API
@@ -29,3 +25,11 @@ Gestionar estado y ahorrar en peticiones: TanStackQuery
 ## Paso 6
 
 Testing con Jest y ReactTestingLibrary. Probar el funcionamiento de la pantalla principal y de cada una de las tabs
+
+## Paso 7
+
+Optimización de hooks con hooks personalizados.
+
+## Paso 8
+
+Implementación de tecnologías como React.portal, UseContext, Virtualización con react window y finalmente electronJS
